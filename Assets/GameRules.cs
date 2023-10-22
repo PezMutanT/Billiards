@@ -10,7 +10,7 @@ public class GameRules
     public void Init()
     {
         Messenger.AddListener<BallCollidedWithBall>(OnBallCollidedWithBall);
-        Messenger.AddListener<BallCollidedWithPot>(OnBallCollidedWithPot);
+        Messenger.AddListener<BallEnteredPot>(OnBallCollidedWithPot);
         Messenger.AddListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
 
         InitPlayers();
@@ -19,7 +19,7 @@ public class GameRules
     public void End()
     {
         Messenger.RemoveListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
-        Messenger.RemoveListener<BallCollidedWithPot>(OnBallCollidedWithPot);
+        Messenger.RemoveListener<BallEnteredPot>(OnBallCollidedWithPot);
         Messenger.RemoveListener<BallCollidedWithBall>(OnBallCollidedWithBall);
     }
 
@@ -51,7 +51,7 @@ public class GameRules
         Debug.Log($"Ball {msg.BallA.BallType} collided with ball {msg.BallB.BallType}");
     }
 
-    private void OnBallCollidedWithPot(BallCollidedWithPot msg)
+    private void OnBallCollidedWithPot(BallEnteredPot msg)
     {
         _currentPlayer.AddScore(msg.Ball.ScoreWhenPotted);
     }

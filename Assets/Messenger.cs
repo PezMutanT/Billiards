@@ -20,12 +20,12 @@ namespace Messaging
         }
     }
 
-    public class BallCollidedWithPot : Message
+    public class BallEnteredPot : Message
     {
         public readonly Ball Ball;
         public readonly Pot Pot;
         
-        public BallCollidedWithPot(Ball ball, Pot pot)
+        public BallEnteredPot(Ball ball, Pot pot)
         {
             Ball = ball;
             Pot = pot;

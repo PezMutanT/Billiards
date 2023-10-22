@@ -5,8 +5,16 @@ public class Pot : MonoBehaviour
 {
     [SerializeField] private PotConfiguration _potConfiguration;
     
-    public void OnBallEnteredPot(Ball ball)
+    private void OnTriggerEnter(Collider other)
     {
-        Messenger.Send(new BallCollidedWithPot(ball, this));
+        var otherBall = other.gameObject.GetComponent<Ball>();
+        if (otherBall == null)
+        {
+            Debug.LogError($"Collision: {other.gameObject.name} with {gameObject.name}");
+            return;
+        }
+        
+        Debug.Log($"Ball {otherBall.name} entered pot {gameObject.name}");
+        Messenger.Send(new BallEnteredPot(otherBall, this));
     }
 }
