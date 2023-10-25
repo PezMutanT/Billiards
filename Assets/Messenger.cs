@@ -56,7 +56,7 @@ namespace Messaging
 
         public BallStartedMoving(Ball ball)
         {
-            Ball = Ball;
+            Ball = ball;
         }
     }
 
@@ -66,7 +66,7 @@ namespace Messaging
 
         public BallStoppedMoving(Ball ball)
         {
-            Ball = Ball;
+            Ball = ball;
         }
     }
     

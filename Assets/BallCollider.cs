@@ -1,8 +1,8 @@
-﻿using System;
-using Messaging;
+﻿using Messaging;
 using UnityEngine;
 
 [RequireComponent(typeof(Ball))]
+[RequireComponent(typeof(Rigidbody))]
 public class BallCollider : MonoBehaviour
 {
     private Ball _thisBall;
@@ -22,11 +22,7 @@ public class BallCollider : MonoBehaviour
             return;
         }
     
+        Debug.Log($"Ball {gameObject.name} collided with {otherBall.gameObject.name}");
         Messenger.Send(new BallCollidedWithBall(_thisBall, otherBall));
-    }
-
-    private void Update()
-    {
-        //Debug.Log($"velocity: {_rigidbody.velocity}, angularVelocity: {_rigidbody.angularVelocity}");
     }
 }

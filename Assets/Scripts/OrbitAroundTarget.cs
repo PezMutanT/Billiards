@@ -106,16 +106,14 @@ public class OrbitAroundTarget : MonoBehaviour
     {
         if (_isMoving)
         {
-            var translationInterpolator = (_elapsedTime / _translationTimeSeconds);
-            if (translationInterpolator < 1f)
-            {
-                transform.position = Vector3.Lerp(_originalPosition, _targetPosition, translationInterpolator);
-                _elapsedTime += Time.deltaTime;
-            }
-            else
+            var translationInterpolator = Mathf.Clamp(_elapsedTime / _translationTimeSeconds, 0f, 1f);
+            if (translationInterpolator == 1f)
             {
                 _isMoving = false;
             }
+            
+            transform.position = Vector3.Lerp(_originalPosition, _targetPosition, translationInterpolator);
+            _elapsedTime += Time.deltaTime;
         }
 
         var previousPosition = transform.position;

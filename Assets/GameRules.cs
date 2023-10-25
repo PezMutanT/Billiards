@@ -10,7 +10,7 @@ public class GameRules
     public void Init()
     {
         Messenger.AddListener<BallCollidedWithBall>(OnBallCollidedWithBall);
-        Messenger.AddListener<BallEnteredPot>(OnBallCollidedWithPot);
+        Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
         Messenger.AddListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
 
         InitPlayers();
@@ -19,7 +19,7 @@ public class GameRules
     public void End()
     {
         Messenger.RemoveListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
-        Messenger.RemoveListener<BallEnteredPot>(OnBallCollidedWithPot);
+        Messenger.RemoveListener<BallEnteredPot>(OnBallEnteredPot);
         Messenger.RemoveListener<BallCollidedWithBall>(OnBallCollidedWithBall);
     }
 
@@ -51,8 +51,10 @@ public class GameRules
         Debug.Log($"Ball {msg.BallA.BallType} collided with ball {msg.BallB.BallType}");
     }
 
-    private void OnBallCollidedWithPot(BallEnteredPot msg)
+    private void OnBallEnteredPot(BallEnteredPot msg)
     {
+        //TODO - rule check if legal pot
+        
         _currentPlayer.AddScore(msg.Ball.ScoreWhenPotted);
     }
 

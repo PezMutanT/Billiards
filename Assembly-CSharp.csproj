@@ -55,6 +55,7 @@
      <Compile Include="Assets\Ball.cs" />
      <Compile Include="Assets\GameRules.cs" />
      <Compile Include="Assets\BallType.cs" />
+     <Compile Include="Assets\Sandbox\ForceApplier.cs" />
      <Compile Include="Assets\CueOLD.cs" />
      <Compile Include="Assets\Scripts\OrbitAroundTarget.cs" />
      <Compile Include="Assets\WasdNavigation.cs" />
@@ -62,8 +63,10 @@
      <Compile Include="Assets\GameSetup.cs" />
      <Compile Include="Assets\Messenger.cs" />
      <Compile Include="Assets\Scripts\Cue.cs" />
+     <Compile Include="Assets\VelocityReducer.cs" />
      <Compile Include="Assets\BallConfiguration.cs" />
      <Compile Include="Assets\TableFrictionTest1.cs" />
+     <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\TableFrictionTest.cs" />
      <Compile Include="Assets\PotConfiguration.cs" />
      <Compile Include="Assets\GlobalConfiguration.cs" />
@@ -77,7 +80,7 @@
      <Folder Include="Assets\Prefabs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <Folder Include="Assets\Scripts" />
-     <Folder Include="Assets\UI" />
+     <Folder Include="Assets\Prefabs\UI" />
      <Folder Include="Assets\TextMesh Pro\Resources\Fonts &amp; Materials" />
      <Folder Include="Assets\Meshes\blender" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
@@ -85,6 +88,7 @@
      <Folder Include="Assets\TextMesh Pro\Resources" />
      <Folder Include="Assets\Meshes" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <Folder Include="Assets\Sound" />
      <Folder Include="Assets\TextMesh Pro" />
      <Folder Include="Assets\reference" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />

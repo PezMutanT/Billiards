@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733cd20a4fbeca047b4722da0ba78d15, type: 3}
   m_Name: Globals
   m_EditorClassIdentifier: 
+  BallMinVelocityThreshold: 0.01
   BallsSleepThreshold: 50

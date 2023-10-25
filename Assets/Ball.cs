@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using Messaging;
 using UnityEngine;
 
@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
     public int ScoreWhenPotted => _ballConfiguration.ScoreWhenPotted;
 
     private Vector3 _previousVelocity;
+    private bool _isInitializing;
     
     public void Start()
     {
@@ -21,6 +22,19 @@ public class Ball : MonoBehaviour
         ApplyBallColor();
 
         _previousVelocity = Vector3.zero;
+
+        //StartCoroutine(WaitUntilBallIsStill());
+    }
+
+    private IEnumerator WaitUntilBallIsStill()
+    {
+        _isInitializing = true;
+        
+        var waitCoroutine = new WaitForSeconds(1.0f);
+        yield return waitCoroutine;
+
+        Debug.Log($"Ball {gameObject.name} is initialized.");
+        _isInitializing = false;
     }
 
     private void ApplyBallColor()
@@ -35,13 +49,17 @@ public class Ball : MonoBehaviour
     {
         //_rigidbody.sleepThreshold = _globalConfiguration.BallsSleepThreshold;
 
+        if (_isInitializing)
+        {
+            return;
+        }
+        
         if (_previousVelocity == Vector3.zero && _rigidbody.velocity != Vector3.zero)
         {
-            Debug.Log($"Ball {name} started moving");
+            Debug.Log($"Ball {name} started moving with velocity {_rigidbody.velocity}");
             Messenger.Send(new BallStartedMoving(this));
         }
         else if (_previousVelocity != Vector3.zero && _rigidbody.velocity == Vector3.zero)
-
         {
             Debug.Log($"Ball {name} stopped moving");
             Messenger.Send(new BallStoppedMoving(this));

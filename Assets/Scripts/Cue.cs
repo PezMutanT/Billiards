@@ -26,6 +26,12 @@ public class Cue : MonoBehaviour
         _isShooting = false;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * 60f);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
