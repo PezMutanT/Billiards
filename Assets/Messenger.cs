@@ -32,10 +32,6 @@ namespace Messaging
         }
     }
 
-    public class AllBallsStoppedMoving : Message
-    {
-    }
-
     public class PlayerScoreChanged : Message
     {
         public Player Player;

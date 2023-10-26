@@ -31,4 +31,9 @@ public class GameHUD : MonoBehaviour
             _player2ScoreText.text = msg.NewScore.ToString();
         }
     }
+
+    public void StartNewTurn()
+    {
+        //TODO - change current player cursor
+    }
 }

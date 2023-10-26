@@ -11,28 +11,8 @@ public class GameRules
     {
         Messenger.AddListener<BallCollidedWithBall>(OnBallCollidedWithBall);
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
-        Messenger.AddListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
 
         InitPlayers();
-    }
-
-    public void End()
-    {
-        Messenger.RemoveListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
-        Messenger.RemoveListener<BallEnteredPot>(OnBallEnteredPot);
-        Messenger.RemoveListener<BallCollidedWithBall>(OnBallCollidedWithBall);
-    }
-
-    private void EndTurn()
-    {
-        if (_currentPlayer == _player1)
-        {
-            _currentPlayer = _player2;
-        }
-        else
-        {
-            _currentPlayer = _player1;
-        }
     }
 
     private void InitPlayers()
@@ -46,6 +26,24 @@ public class GameRules
         _currentPlayer = _player1;
     }
 
+    public void StartNewTurn()
+    {
+        if (_currentPlayer == _player1)
+        {
+            _currentPlayer = _player2;
+        }
+        else
+        {
+            _currentPlayer = _player1;
+        }
+    }
+
+    public void End()
+    {
+        Messenger.RemoveListener<BallEnteredPot>(OnBallEnteredPot);
+        Messenger.RemoveListener<BallCollidedWithBall>(OnBallCollidedWithBall);
+    }
+
     private void OnBallCollidedWithBall(BallCollidedWithBall msg)
     {
         Debug.Log($"Ball {msg.BallA.BallType} collided with ball {msg.BallB.BallType}");
@@ -56,10 +54,5 @@ public class GameRules
         //TODO - rule check if legal pot
         
         _currentPlayer.AddScore(msg.Ball.ScoreWhenPotted);
-    }
-
-    private void OnAllBallsStoppedMoving(AllBallsStoppedMoving msg)
-    {
-        EndTurn();
     }
 }

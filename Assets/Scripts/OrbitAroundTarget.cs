@@ -1,4 +1,3 @@
-using Messaging;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -25,8 +24,6 @@ public class OrbitAroundTarget : MonoBehaviour
     {
         _camera = GetComponent<Camera>();
         _deltaMouseInput = Vector2.zero;
-        
-        Messenger.AddListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
         
         var target2Position = _target2 == null ? Vector3.zero : _target2.position;
         SetPositionLookingAtBothTargets(target2Position);
@@ -112,13 +109,8 @@ public class OrbitAroundTarget : MonoBehaviour
         transform.rotation = newRotation;
     }
 
-    private void OnAllBallsStoppedMoving(AllBallsStoppedMoving e)
+    public void StartNewTurn()
     {
         SetPositionLookingAtBothTargets(Vector3.zero);
-    }
-
-    private void OnDestroy()
-    {
-        Messenger.RemoveListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
     }
 }

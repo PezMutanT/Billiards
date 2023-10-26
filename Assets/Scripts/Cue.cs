@@ -1,4 +1,3 @@
-using Messaging;
 using UnityEngine;
 
 public class Cue : MonoBehaviour
@@ -15,14 +14,7 @@ public class Cue : MonoBehaviour
     
     public void Init()
     {
-        Messenger.AddListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
-        
         _isCharging = false;
-        _isShooting = false;
-    }
-
-    private void OnAllBallsStoppedMoving(AllBallsStoppedMoving e)
-    {
         _isShooting = false;
     }
 
@@ -89,5 +81,10 @@ public class Cue : MonoBehaviour
     {
         _forceMagnitude = forceMagnitude;
         Shoot();
+    }
+
+    public void StartNewTurn()
+    {
+        _isShooting = false;
     }
 }

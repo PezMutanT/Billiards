@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private OrbitAroundTarget _mainCamera;
     [SerializeField] private GameSetup _gameSetup;
     [SerializeField] private Cue _cue;
-    
+
+    private GameRules _gameRules;
     private int _ballsMovingAmount;
 
     void Awake()
@@ -20,7 +21,8 @@ public class GameManager : MonoBehaviour
     private void InitObjects()
     {
         _gameSetup.Init();
-        _mainCamera.Init();
+
+        _gameRules = new GameRules();
     }
 
     private void StartNewGame()
@@ -29,7 +31,9 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
 
+        _gameRules.Init();
         _gameHUD.Init();
+        _mainCamera.Init();
         _cue.Init();
     }
 
@@ -43,7 +47,10 @@ public class GameManager : MonoBehaviour
         _ballsMovingAmount--;
         if (_ballsMovingAmount == 0)
         {
-            Messenger.Send(new AllBallsStoppedMoving());
+            _gameRules.StartNewTurn();
+            _gameHUD.StartNewTurn();
+            _mainCamera.StartNewTurn();
+            _cue.StartNewTurn();
         }
     }
 
@@ -54,6 +61,8 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
+        _gameRules.End();
+        
         Messenger.RemoveListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.RemoveListener<BallStoppedMoving>(OnBallStoppedMoving);
     }
