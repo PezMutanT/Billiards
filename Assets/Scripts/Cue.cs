@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Cue : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private GlobalConfiguration _globalConfiguration;
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Rigidbody _whiteBallRigidBody;
     [SerializeField] private float _distanceToWhiteBall;
@@ -13,7 +13,7 @@ public class Cue : MonoBehaviour
     private bool _isShooting = false;
     private float _forceMagnitude;
     
-    private void Start()
+    public void Init()
     {
         Messenger.AddListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
         
@@ -49,19 +49,17 @@ public class Cue : MonoBehaviour
             _isCharging = false;
 
             Shoot();
-
-            _forceMagnitude = 0f;
         }
     }
 
-    public void UpdateFromCamera()
+    public void UpdateFromCamera(Vector3 cameraForwardVector)
     {
         if (_isCharging || _isShooting)
         {
             return;
         }
         
-        transform.forward = _cameraTransform.forward;
+        transform.forward = cameraForwardVector;
 
         var rotationEulerAngles = transform.rotation.eulerAngles;
         rotationEulerAngles.x = 0f;
@@ -74,7 +72,8 @@ public class Cue : MonoBehaviour
     private void Shoot()
     {
         _isShooting = true;
-        _rigidBody.AddForce(transform.forward * _forceMagnitude);
+        _rigidBody.AddForce(transform.forward * Mathf.Max(_forceMagnitude, _globalConfiguration.MinCueForceMagnitude));
+        _forceMagnitude = 0f;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -84,5 +83,11 @@ public class Cue : MonoBehaviour
         {
             _rigidBody.velocity = Vector3.zero;
         }
+    }
+
+    public void DebugShoot(float forceMagnitude)
+    {
+        _forceMagnitude = forceMagnitude;
+        Shoot();
     }
 }

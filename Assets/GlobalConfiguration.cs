@@ -5,4 +5,6 @@ public class GlobalConfiguration : ScriptableObject
 {
     public float BallMinVelocityThreshold;
     public float BallsSleepThreshold;
+    public float MinCueForceMagnitude;
+    public float MaxCueForceMagnitude;
 }

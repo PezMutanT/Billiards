@@ -4,37 +4,26 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private GlobalConfiguration _globalConfiguration;
     [SerializeField] private BallConfiguration _ballConfiguration;
     [SerializeField] private Rigidbody _rigidbody;
 
     public BallType BallType => _ballConfiguration.BallType;
     public int ScoreWhenPotted => _ballConfiguration.ScoreWhenPotted;
 
+    private Vector3 _initialPosition;
     private Vector3 _previousVelocity;
     private bool _isInitializing;
     
-    public void Start()
+    public void Init()
     {
-        /*_rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.sleepThreshold = _globalConfiguration.BallsSleepThreshold;*/
-        
         ApplyBallColor();
 
+        _initialPosition = transform.position;
         _previousVelocity = Vector3.zero;
 
+        Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
+
         //StartCoroutine(WaitUntilBallIsStill());
-    }
-
-    private IEnumerator WaitUntilBallIsStill()
-    {
-        _isInitializing = true;
-        
-        var waitCoroutine = new WaitForSeconds(1.0f);
-        yield return waitCoroutine;
-
-        Debug.Log($"Ball {gameObject.name} is initialized.");
-        _isInitializing = false;
     }
 
     private void ApplyBallColor()
@@ -45,10 +34,52 @@ public class Ball : MonoBehaviour
         renderer.SetPropertyBlock(propertyBlock);
     }
 
+    private IEnumerator WaitUntilBallIsStill()
+    {
+        _isInitializing = true;
+        
+        var waitCoroutine = new WaitForSeconds(1.0f);
+        yield return waitCoroutine;
+
+        _isInitializing = false;
+    }
+
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener<BallEnteredPot>(OnBallEnteredPot);
+    }
+
+    private void OnBallEnteredPot(BallEnteredPot e)
+    {
+        if (e.Ball != this)
+        {
+            return;
+        }
+
+        RemoveFromGame();
+    }
+
+    private void RemoveFromGame()
+    {
+        ForceStop();
+        gameObject.SetActive(false);
+    }
+
+    public void DebugReset()
+    {
+        ForceStop();
+        transform.position = _initialPosition;
+    }
+
+    private void ForceStop()
+    {
+        _previousVelocity = Vector3.zero;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+    }
+
     private void Update()
     {
-        //_rigidbody.sleepThreshold = _globalConfiguration.BallsSleepThreshold;
-
         if (_isInitializing)
         {
             return;
@@ -56,7 +87,7 @@ public class Ball : MonoBehaviour
         
         if (_previousVelocity == Vector3.zero && _rigidbody.velocity != Vector3.zero)
         {
-            Debug.Log($"Ball {name} started moving with velocity {_rigidbody.velocity}");
+            Debug.Log($"Ball {name} started moving");
             Messenger.Send(new BallStartedMoving(this));
         }
         else if (_previousVelocity != Vector3.zero && _rigidbody.velocity == Vector3.zero)

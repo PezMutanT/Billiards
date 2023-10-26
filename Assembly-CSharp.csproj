@@ -48,15 +48,15 @@
      <Compile Include="Assets\BallCollider.cs" />
      <Compile Include="Assets\PotType.cs" />
      <Compile Include="Assets\Player.cs" />
+     <Compile Include="Assets\Scripts\Debug\DebugShoot.cs" />
      <Compile Include="Assets\CustomDebug.cs" />
-     <Compile Include="Assets\GameHUD.cs" />
      <Compile Include="Assets\Sandbox\DebugLineDrawer.cs" />
+     <Compile Include="Assets\Scripts\UI\GameHUD.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Ball.cs" />
      <Compile Include="Assets\GameRules.cs" />
      <Compile Include="Assets\BallType.cs" />
      <Compile Include="Assets\Sandbox\ForceApplier.cs" />
-     <Compile Include="Assets\CueOLD.cs" />
      <Compile Include="Assets\Scripts\OrbitAroundTarget.cs" />
      <Compile Include="Assets\WasdNavigation.cs" />
      <Compile Include="Assets\Pot.cs" />
@@ -90,6 +90,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <Folder Include="Assets\Sound" />
      <Folder Include="Assets\TextMesh Pro" />
+     <Folder Include="Assets\Scripts\Debug" />
      <Folder Include="Assets\reference" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -97,6 +98,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <Folder Include="Assets\Scripts\UI" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <Folder Include="Assets\TextMesh Pro\Shaders" />

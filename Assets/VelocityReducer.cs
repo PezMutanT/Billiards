@@ -7,7 +7,6 @@ public class VelocityReducer : MonoBehaviour
 {
     [SerializeField] private GlobalConfiguration _globalConfiguration;
     
-    
     private Rigidbody _rigidbody;
     private Ball _thisBall;
     private bool _isBallMoving;

@@ -15,16 +15,12 @@ public class GameSetup : MonoBehaviour
     private List<GameObject> _allBalls = new List<GameObject>();
     
     private const float _ballSize = 52.5f;
-    private const float _ballOffsetConstant = 0.8661f;   //
-
-    private void Start()
-    {
-        Init();
-    }
+    private const float _ballOffsetConstant = 0.8661f;
 
     public void Init()
     {
         SetupBalls();
+        InitBalls();
     }
 
     public void SetupBalls()
@@ -69,6 +65,21 @@ public class GameSetup : MonoBehaviour
 
                 _allBalls.Add(Instantiate(_redBallPrefab, newBallPosition, Quaternion.identity));
             }
+        }
+    }
+
+    private void InitBalls()
+    {
+        foreach (var ballGameObject in _allBalls)
+        {
+            Ball ball = ballGameObject.GetComponent<Ball>();
+            if (ball == null)
+            {
+                Debug.LogError($"Error loading ball {ballGameObject.name}");
+                return;
+            }
+            
+            ball.Init();
         }
     }
 

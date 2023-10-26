@@ -1,4 +1,3 @@
-using System;
 using Messaging;
 using UnityEngine;
 
@@ -22,44 +21,18 @@ public class OrbitAroundTarget : MonoBehaviour
     private Vector3 _originalPosition;
     private Vector3 _targetPosition;
 
-    //TODO - move to game manager or similar
-    private int _ballsMovingAmount;
-    
-    private void Awake()
+    public void Init()
     {
         _camera = GetComponent<Camera>();
         _deltaMouseInput = Vector2.zero;
+        
+        Messenger.AddListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
+        
         var target2Position = _target2 == null ? Vector3.zero : _target2.position;
         SetPositionLookingAtBothTargets(target2Position);
-        
-        //TODO - move to game manager or similar
-        _ballsMovingAmount = 0;
-        Messenger.AddListener<BallStartedMoving>(OnBallStartedMoving);
-        Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
     }
 
-    private void OnBallStartedMoving(BallStartedMoving e)
-    {
-        _ballsMovingAmount++;
-    }
-
-    private void OnBallStoppedMoving(BallStoppedMoving e)
-    {
-        _ballsMovingAmount--;
-        if (_ballsMovingAmount == 0)
-        {
-            Messenger.Send(new AllBallsStoppedMoving());
-            SetPositionLookingAtBothTargets(Vector3.zero);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        Messenger.RemoveListener<BallStartedMoving>(OnBallStartedMoving);
-        Messenger.RemoveListener<BallStoppedMoving>(OnBallStoppedMoving);
-    }
-
-    private void SetPositionLookingAtBothTargets(Vector3 target2Position)
+    public void SetPositionLookingAtBothTargets(Vector3 target2Position)
     {
         _isMoving = true;
         _originalPosition = transform.position;
@@ -128,7 +101,7 @@ public class OrbitAroundTarget : MonoBehaviour
         
         LookToTarget1();
         
-        _cue.UpdateFromCamera();
+        _cue.UpdateFromCamera(transform.forward);
     }
 
     private void LookToTarget1()
@@ -137,5 +110,15 @@ public class OrbitAroundTarget : MonoBehaviour
         var newRotation = Quaternion.LookRotation(forwardDirection);
 
         transform.rotation = newRotation;
+    }
+
+    private void OnAllBallsStoppedMoving(AllBallsStoppedMoving e)
+    {
+        SetPositionLookingAtBothTargets(Vector3.zero);
+    }
+
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener<AllBallsStoppedMoving>(OnAllBallsStoppedMoving);
     }
 }

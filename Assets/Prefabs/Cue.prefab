@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa2288671a1a5140b0820235aa20b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _globalConfiguration: {fileID: 11400000, guid: 46c3c07d937ca26479bad3b158bd416e,
+    type: 2}
   _cameraTransform: {fileID: 0}
   _rigidBody: {fileID: 5484180896544661812}
   _whiteBallRigidBody: {fileID: 0}
