@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
         InitObjects();
-        
         StartNewGame();
     }
 
@@ -65,5 +69,12 @@ public class GameManager : MonoBehaviour
         
         Messenger.RemoveListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.RemoveListener<BallStoppedMoving>(OnBallStoppedMoving);
+    }
+
+    public void DebugResetGame()
+    {
+        EndGame();
+        
+        Init();
     }
 }

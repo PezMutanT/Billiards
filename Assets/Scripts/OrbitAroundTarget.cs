@@ -24,6 +24,9 @@ public class OrbitAroundTarget : MonoBehaviour
     {
         _camera = GetComponent<Camera>();
         _deltaMouseInput = Vector2.zero;
+        _elapsedTime = 0f;
+        _isMoving = false;
+        _originalPosition = transform.position;
         
         var target2Position = _target2 == null ? Vector3.zero : _target2.position;
         SetPositionLookingAtBothTargets(target2Position);
