@@ -56,13 +56,13 @@ public class Ball : MonoBehaviour
             return;
         }
 
-        RemoveFromGame();
+        ForceStop();
     }
 
     private void RemoveFromGame()
     {
         ForceStop();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public void DebugReset()
@@ -74,6 +74,7 @@ public class Ball : MonoBehaviour
     private void ForceStop()
     {
         _previousVelocity = Vector3.zero;
+        _rigidbody.useGravity = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
     }
