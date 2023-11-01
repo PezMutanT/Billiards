@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallMinVelocityThreshold: 0.01
   BallsSleepThreshold: 50
-  MinCueForceMagnitude: 50000
-  MaxCueForceMagnitude: 500000
+  MinCueForceMagnitude: 1000
+  MaxCueForceMagnitude: 10000

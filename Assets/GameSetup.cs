@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class GameSetup : MonoBehaviour
 {
-    [SerializeField] private Transform _table;
-    [SerializeField] private GameObject _blackBallPrefab;
-    [SerializeField] private GameObject _pinkBallPrefab;
-    [SerializeField] private GameObject _blueBallPrefab;
-    [SerializeField] private GameObject _brownBallPrefab;
-    [SerializeField] private GameObject _greenBallPrefab;
-    [SerializeField] private GameObject _yellowBallPrefab;
-    [SerializeField] private GameObject _redBallPrefab;
+    [SerializeField] private MeshRenderer _tableMesh;
+    [SerializeField] protected GameObject _blackBallPrefab;
+    [SerializeField] protected GameObject _pinkBallPrefab;
+    [SerializeField] protected GameObject _blueBallPrefab;
+    [SerializeField] protected GameObject _brownBallPrefab;
+    [SerializeField] protected GameObject _greenBallPrefab;
+    [SerializeField] protected GameObject _yellowBallPrefab;
+    [SerializeField] protected GameObject _redBallPrefab;
 
     private List<GameObject> _allBalls = new List<GameObject>();
     
-    private const float _ballSize = 52.5f;
+    private const float _ballSize = 0.525f;
     private const float _ballOffsetConstant = 0.8661f;
 
     public void Init()
@@ -22,19 +22,20 @@ public class GameSetup : MonoBehaviour
         SetupBalls();
         InitBalls();
     }
-
-    public void SetupBalls()
+    
+    private void SetupBalls()
     {
-        var tableWidth = _table.localScale.x;
-        var halfTableWidth = tableWidth * 0.5f;
+        var meshScale = _tableMesh.transform.localScale;
+        var tableLength = _tableMesh.bounds.size.x;
+        var halfTableLength = tableLength * 0.5f;
 
-        var blackSpotX = -halfTableWidth + MmToUnityUnits(324.0f);
+        var blackSpotX = -halfTableLength + MetersToUnityUnits(0.324f);
         var pinkSpotX = blackSpotX * 0.5f;
         var blueSpotX = 0.0f;
-        var brownSpotX = halfTableWidth - MmToUnityUnits(737.0f);
-        var yellowSpotY = MmToUnityUnits(292.0f);
+        var brownSpotX = halfTableLength - MetersToUnityUnits(0.737f);
+        var yellowSpotY = MetersToUnityUnits(0.292f);
         var greenSpotY = -yellowSpotY;
-        var firstRedSpotX = pinkSpotX - 1.0f;
+        var firstRedSpotX = pinkSpotX - _ballSize;
 
         foreach (var ball in _allBalls)
         {
@@ -59,15 +60,15 @@ public class GameSetup : MonoBehaviour
             for (var j = 0; j < (i + 1); j++)
             {
                 var newBallPosition = new Vector3(
-                    firstRedSpotX - (_ballOffsetConstant * i),
+                    firstRedSpotX - (_ballOffsetConstant * i * _ballSize),
                     0f,
-                    (-0.5f * i) + j);
+                    (-0.5f * i * _ballSize) + j * _ballSize);
 
                 _allBalls.Add(Instantiate(_redBallPrefab, newBallPosition, Quaternion.identity));
             }
         }
     }
-
+    
     private void InitBalls()
     {
         foreach (var ballGameObject in _allBalls)
@@ -83,8 +84,8 @@ public class GameSetup : MonoBehaviour
         }
     }
 
-    private float MmToUnityUnits(float millimeters)
+    private float MetersToUnityUnits(float meters)
     {
-        return millimeters / _ballSize;
+        return meters * 10f;
     }
 }
