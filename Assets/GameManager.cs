@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private OrbitAroundTarget _mainCamera;
     [SerializeField] private GameSetup _gameSetup;
     [SerializeField] private Cue _cue;
+    [SerializeField] private Ball _whiteBall;
 
     private GameRules _gameRules;
     private int _ballsMovingAmount;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         _gameHUD.Init();
         _mainCamera.Init();
         _cue.Init();
+        _whiteBall.Init();
     }
 
     private void OnBallStartedMoving(BallStartedMoving e)
