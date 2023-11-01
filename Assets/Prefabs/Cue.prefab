@@ -50,7 +50,7 @@ MonoBehaviour:
     type: 2}
   _rigidBody: {fileID: 5484180896544661812}
   _whiteBallRigidBody: {fileID: 0}
-  _distanceToWhiteBall: 1.5
+  _distanceToWhiteBall: 1
   _forceChargeOverTime: 5000
   _numberOfFixedUpdatesToWaitBeforeStopping: 0
 --- !u!54 &5484180896544661812
