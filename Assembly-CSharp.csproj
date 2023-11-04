@@ -50,6 +50,7 @@
      <Compile Include="Assets\PotType.cs" />
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Scripts\Debug\DebugShoot.cs" />
+     <Compile Include="Assets\Scenes\BallCollisionTest\BallCollisionTestManager.cs" />
      <Compile Include="Assets\Scenes\ForceVsImpulse\ApplyForceTest.cs" />
      <Compile Include="Assets\Scenes\ForceVsImpulse\ApplyImpulseTest.cs" />
      <Compile Include="Assets\Sandbox\DebugLineDrawer.cs" />
@@ -112,6 +113,7 @@
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <Folder Include="Assets\Scripts\UI" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <Folder Include="Assets\Scenes\BallCollisionTest" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <Folder Include="Assets\TextMesh Pro\Shaders" />
      <Folder Include="Assets\TextMesh Pro\Resources\Style Sheets" />
