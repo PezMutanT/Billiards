@@ -20,7 +20,7 @@ public class OrbitAroundTarget : GameCamera
     private Vector3 _originalPosition;
     private Vector3 _targetPosition;
 
-    public void Init()
+    public override void Init()
     {
         _camera = GetComponent<Camera>();
         _deltaMouseInput = Vector2.zero;
@@ -112,7 +112,7 @@ public class OrbitAroundTarget : GameCamera
         transform.rotation = newRotation;
     }
 
-    public void StartNewTurn()
+    public void OnEnable()
     {
         SetPositionLookingAtBothTargets(Vector3.zero);
     }

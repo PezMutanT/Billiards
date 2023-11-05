@@ -5,7 +5,6 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameHUD _gameHUD;
     [SerializeField] private CameraDirector _cameraDirector;
-    [SerializeField] private OrbitAroundTarget _mainCamera;
     [SerializeField] private GameSetup _gameSetup;
     [SerializeField] private Cue _cue;
     [SerializeField] private Ball _whiteBall;
@@ -41,7 +40,6 @@ public class GameManager : MonoBehaviour
 
         _gameRules.Init();
         _gameHUD.Init();
-        _mainCamera.Init();
         _cue.Init();
         _whiteBall.Init();
     }
@@ -58,7 +56,7 @@ public class GameManager : MonoBehaviour
         {
             _gameRules.StartNewTurn();
             _gameHUD.StartNewTurn();
-            _mainCamera.StartNewTurn();
+            _cameraDirector.StartNewTurn();
             _cue.StartNewTurn();
         }
     }

@@ -1,11 +1,14 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameCamera : MonoBehaviour
 {
     [SerializeField] private CameraType _cameraType;
 
     public CameraType CameraType => _cameraType;
+
+    public virtual void Init()
+    {
+    }
 
     public void Activate()
     {

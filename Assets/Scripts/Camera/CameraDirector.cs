@@ -13,6 +13,7 @@ public class CameraDirector : MonoBehaviour
         _camerasData = new Dictionary<CameraType, GameCamera>();
         foreach (var camera in _gameCameras)
         {
+            camera.Init();
             camera.Deactivate();
             _camerasData.Add(camera.CameraType, camera);
         }
@@ -26,6 +27,11 @@ public class CameraDirector : MonoBehaviour
         _currentCamera.Deactivate();
         _currentCamera = _camerasData[cameraType];
         _currentCamera.Activate();
+    }
+
+    public void StartNewTurn()
+    {
+        ActivateCamera(CameraType.PLAYER);
     }
 
     public void End()
