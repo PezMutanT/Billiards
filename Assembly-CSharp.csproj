@@ -66,6 +66,7 @@
      <Compile Include="Assets\BallType.cs" />
      <Compile Include="Assets\Scenes\ColliderTest\ResetableObject.cs" />
      <Compile Include="Assets\Sandbox\ForceApplier.cs" />
+     <Compile Include="Assets\Scenes\MultipleCameras\CameraRenderToTextureTest.cs" />
      <Compile Include="Assets\Scenes\FPS\FPSCounter.cs" />
      <Compile Include="Assets\Scenes\ColliderTest\IResetableObject.cs" />
      <Compile Include="Assets\Scripts\OrbitAroundTarget.cs" />
@@ -101,6 +102,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <Folder Include="Assets\TextMesh Pro\Resources" />
+     <Folder Include="Assets\Scenes\MultipleCameras" />
      <Folder Include="Assets\Scenes\ForceVsImpulse" />
      <Folder Include="Assets\Meshes" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />

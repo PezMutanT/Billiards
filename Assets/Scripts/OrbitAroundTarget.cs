@@ -13,7 +13,6 @@ public class OrbitAroundTarget : GameCamera
     [SerializeField] private LayerMask _targetObjectsLayerMask;
     [SerializeField] private float _translationTimeSeconds;
 
-    private Camera _camera;
     private Vector2 _deltaMouseInput;
     private float _elapsedTime;
     private bool _isMoving;
@@ -22,7 +21,8 @@ public class OrbitAroundTarget : GameCamera
 
     public override void Init()
     {
-        _camera = GetComponent<Camera>();
+        base.Init();
+        
         _deltaMouseInput = Vector2.zero;
         _elapsedTime = 0f;
         _isMoving = false;
