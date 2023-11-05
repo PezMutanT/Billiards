@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameHUD _gameHUD;
+    [SerializeField] private CameraDirector _cameraDirector;
     [SerializeField] private OrbitAroundTarget _mainCamera;
     [SerializeField] private GameSetup _gameSetup;
     [SerializeField] private Cue _cue;
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void StartNewGame()
     {
+        _cameraDirector.Init();
+        
         _ballsMovingAmount = 0;
         Messenger.AddListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
@@ -71,6 +74,8 @@ public class GameManager : MonoBehaviour
         
         Messenger.RemoveListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.RemoveListener<BallStoppedMoving>(OnBallStoppedMoving);
+
+        _cameraDirector.End();
     }
 
     public void DebugResetGame()

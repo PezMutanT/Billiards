@@ -47,10 +47,14 @@
   <ItemGroup>
      <Compile Include="Assets\BallCollider.cs" />
      <Compile Include="Assets\Scripts\Debug\DebugInput.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraType.cs" />
      <Compile Include="Assets\PotType.cs" />
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Scripts\Debug\DebugShoot.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraToggler.cs" />
+     <Compile Include="Assets\Scripts\Camera\GameCamera.cs" />
      <Compile Include="Assets\Scenes\BallCollisionTest\BallCollisionTestManager.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraDirector.cs" />
      <Compile Include="Assets\Scenes\ForceVsImpulse\ApplyForceTest.cs" />
      <Compile Include="Assets\Scenes\ForceVsImpulse\ApplyImpulseTest.cs" />
      <Compile Include="Assets\Sandbox\DebugLineDrawer.cs" />
@@ -91,6 +95,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <Folder Include="Assets\Scripts" />
      <Folder Include="Assets\Prefabs\UI" />
+     <Folder Include="Assets\Scripts\Camera" />
      <Folder Include="Assets\TextMesh Pro\Resources\Fonts &amp; Materials" />
      <Folder Include="Assets\Meshes\blender" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
-public class OrbitAroundTarget : MonoBehaviour
+public class OrbitAroundTarget : GameCamera
 {
     [SerializeField] private Transform _target1;
     [SerializeField] private Transform _target2;
