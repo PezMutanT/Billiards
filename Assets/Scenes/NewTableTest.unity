@@ -1424,6 +1424,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -7142730415444868035, guid: c010106685073c24f815adcb0c71b6d4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -6057480409454116316, guid: c010106685073c24f815adcb0c71b6d4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
