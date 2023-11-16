@@ -65,9 +65,15 @@ public class Cue : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Shoot");
+        var forceMagnitude = Mathf.Clamp(
+            _forceMagnitude,
+            _globalConfiguration.MinCueForceMagnitude,
+            _globalConfiguration.MaxCueForceMagnitude);
+        
+        Debug.Log($"Shooting with force magnitude: {forceMagnitude}");
         _isShooting = true;
-        _rigidBody.AddForce(transform.forward * Mathf.Max(_forceMagnitude, _globalConfiguration.MinCueForceMagnitude));
+        _rigidBody.AddForce(transform.forward * forceMagnitude);
+        
         _forceMagnitude = 0f;
     }
 
