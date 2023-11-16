@@ -57,6 +57,7 @@ public class Ball : MonoBehaviour
         }
 
         ForceStop();
+        Messenger.Send(new BallStoppedMoving(this));
     }
 
     private void RemoveFromGame()
