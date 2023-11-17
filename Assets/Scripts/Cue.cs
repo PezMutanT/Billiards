@@ -12,14 +12,12 @@ public class Cue : MonoBehaviour
 
     private bool _isCharging = false;
     private bool _isShooting = false;
-    private bool _hasHitWhiteBall = false;
     private float _forceMagnitude;
 
     public void Init()
     {
         _isCharging = false;
         _isShooting = false;
-        _hasHitWhiteBall = false;
     }
 
     private void OnDrawGizmos()
@@ -93,7 +91,6 @@ public class Cue : MonoBehaviour
         var otherRigidBody = other.gameObject.GetComponent<Rigidbody>();
         if (otherRigidBody != null && otherRigidBody == _whiteBallRigidBody)
         {
-            _hasHitWhiteBall = true;
             _rigidBody.velocity = Vector3.zero;
         }
     }
