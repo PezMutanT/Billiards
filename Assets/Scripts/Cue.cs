@@ -1,4 +1,5 @@
 using System.Collections;
+using Messaging;
 using UnityEngine;
 
 public class Cue : MonoBehaviour
@@ -66,6 +67,8 @@ public class Cue : MonoBehaviour
 
     private IEnumerator ShootWithDelay()
     {
+        Messenger.Send(new PlayerAnnouncedShot(_whiteBallRigidBody.transform, transform.forward));
+        
         yield return new WaitForSeconds(_globalConfiguration.ShootDelaySeconds);
 
         Shoot();

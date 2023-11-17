@@ -65,6 +65,18 @@ namespace Messaging
             Ball = ball;
         }
     }
+
+    public class PlayerAnnouncedShot : Message
+    {
+        public Transform CueBall;
+        public Vector3 Direction;
+
+        public PlayerAnnouncedShot(Transform cueBall, Vector3 direction)
+        {
+            CueBall = cueBall;
+            Direction = direction;
+        }
+    }
     
     public static class Messenger
     {

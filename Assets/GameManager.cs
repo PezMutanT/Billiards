@@ -37,11 +37,17 @@ public class GameManager : MonoBehaviour
         _ballsMovingAmount = 0;
         Messenger.AddListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
+        Messenger.AddListener<PlayerAnnouncedShot>(OnPlayerAnnouncedShot);
 
         _gameRules.Init();
         _gameHUD.Init();
         _cue.Init();
         _whiteBall.Init();
+    }
+
+    private void OnPlayerAnnouncedShot(PlayerAnnouncedShot e)
+    {
+        _cameraDirector.SwitchToShotCamera(e.CueBall, e.Direction);
     }
 
     private void OnBallStartedMoving(BallStartedMoving e)
@@ -72,6 +78,7 @@ public class GameManager : MonoBehaviour
         
         Messenger.RemoveListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.RemoveListener<BallStoppedMoving>(OnBallStoppedMoving);
+        Messenger.RemoveListener<PlayerAnnouncedShot>(OnPlayerAnnouncedShot);
 
         _cameraDirector.End();
     }
