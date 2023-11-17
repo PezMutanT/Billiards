@@ -68,6 +68,7 @@
      <Compile Include="Assets\Sandbox\ForceApplier.cs" />
      <Compile Include="Assets\Scenes\MultipleCameras\CameraRenderToTextureTest.cs" />
      <Compile Include="Assets\Scenes\FPS\FPSCounter.cs" />
+     <Compile Include="Assets\Scripts\CueCollider.cs" />
      <Compile Include="Assets\Scenes\ColliderTest\IResetableObject.cs" />
      <Compile Include="Assets\Scripts\OrbitAroundTarget.cs" />
      <Compile Include="Assets\WasdNavigation.cs" />

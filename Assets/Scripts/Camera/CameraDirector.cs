@@ -72,16 +72,16 @@ public class CameraDirector : MonoBehaviour
 
     public void SwitchToShotCamera(Transform cueBall, Vector3 direction)
     {
-        var ballRadius = cueBall.gameObject.GetComponent<SphereCollider>().radius;
+        var ballRadius = cueBall.gameObject.GetComponent<SphereCollider>().radius * cueBall.localScale.x;
         if (Physics.SphereCast(
                 cueBall.position,
-                ballRadius, direction,
+                ballRadius,
+                direction,
                 out var hit,
+                40f,
                 LayerMask.GetMask("RaycastBalls")))
         {
             var targetBall = hit.collider.transform;
-            Debug.Log($"First potential collision with {targetBall.gameObject.name}");
-
             var shotCamera = DetermineShotCamera(cueBall, targetBall);
             ActivateCamera(shotCamera);
         }

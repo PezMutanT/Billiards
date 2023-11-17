@@ -9,7 +9,8 @@ public class Cue : MonoBehaviour
     [SerializeField] private Rigidbody _whiteBallRigidBody;
     [SerializeField] private float _distanceToWhiteBall;
     [SerializeField] private float _forceChargeOverTime;
-
+    [SerializeField] private Transform _trajectoryRoot;
+    
     private bool _isCharging = false;
     private bool _isShooting = false;
     private float _forceMagnitude;
@@ -61,6 +62,21 @@ public class Cue : MonoBehaviour
 
         var whiteBallPosition = _whiteBallRigidBody.transform.position;
         transform.position = whiteBallPosition - transform.forward.normalized * _distanceToWhiteBall;
+        
+        
+        
+        //sphere cast
+        var ballRadius = _whiteBallRigidBody.gameObject.GetComponent<SphereCollider>().radius * _whiteBallRigidBody.transform.localScale.x;
+        if (Physics.SphereCast(
+                _whiteBallRigidBody.transform.position,
+                ballRadius,
+                transform.forward,
+                out var hit,
+                40f,
+                LayerMask.GetMask("RaycastBalls", "Table")))
+        {
+            _trajectoryRoot.localScale = new Vector3(1f, 1f, hit.distance);
+        }
     }
 
     private IEnumerator ShootWithDelay()
@@ -84,15 +100,6 @@ public class Cue : MonoBehaviour
         _rigidBody.AddForce(transform.forward * forceMagnitude);
         
         _forceMagnitude = 0f;
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        var otherRigidBody = other.gameObject.GetComponent<Rigidbody>();
-        if (otherRigidBody != null && otherRigidBody == _whiteBallRigidBody)
-        {
-            _rigidBody.velocity = Vector3.zero;
-        }
     }
 
     public void DebugShoot(float forceMagnitude)
