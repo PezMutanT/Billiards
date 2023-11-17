@@ -1,6 +1,6 @@
 ﻿public enum CameraType
 {
     PLAYER,
-    BOTTOM,
+    TV,
     TOP_FULL_TABLE,
 }

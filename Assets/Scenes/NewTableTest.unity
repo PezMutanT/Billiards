@@ -1963,7 +1963,7 @@ GameObject:
   - component: {fileID: 1643632264}
   - component: {fileID: 1643632263}
   m_Layer: 0
-  m_Name: BottomCamera
+  m_Name: TvCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
