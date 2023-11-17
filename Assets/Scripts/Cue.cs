@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Cue : MonoBehaviour
@@ -42,7 +43,7 @@ public class Cue : MonoBehaviour
         {
             _isCharging = false;
 
-            Shoot();
+            StartCoroutine(ShootWithDelay());
         }
     }
 
@@ -61,6 +62,13 @@ public class Cue : MonoBehaviour
 
         var whiteBallPosition = _whiteBallRigidBody.transform.position;
         transform.position = whiteBallPosition - transform.forward.normalized * _distanceToWhiteBall;
+    }
+
+    private IEnumerator ShootWithDelay()
+    {
+        yield return new WaitForSeconds(_globalConfiguration.ShootDelaySeconds);
+
+        Shoot();
     }
 
     private void Shoot()
@@ -90,7 +98,7 @@ public class Cue : MonoBehaviour
     public void DebugShoot(float forceMagnitude)
     {
         _forceMagnitude = forceMagnitude;
-        Shoot();
+        StartCoroutine(ShootWithDelay());
     }
 
     public void StartNewTurn()

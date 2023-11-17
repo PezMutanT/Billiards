@@ -16,3 +16,4 @@ MonoBehaviour:
   BallsSleepThreshold: 50
   MinCueForceMagnitude: 1000
   MaxCueForceMagnitude: 10000
+  ShootDelaySeconds: 2

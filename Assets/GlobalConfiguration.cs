@@ -7,4 +7,5 @@ public class GlobalConfiguration : ScriptableObject
     public float BallsSleepThreshold;
     public float MinCueForceMagnitude;
     public float MaxCueForceMagnitude;
+    public float ShootDelaySeconds;
 }
