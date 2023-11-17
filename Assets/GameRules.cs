@@ -1,4 +1,5 @@
-﻿using Messaging;
+﻿using System.Collections.Generic;
+using Messaging;
 using UnityEngine;
 
 public class GameRules
@@ -6,6 +7,9 @@ public class GameRules
     private Player _player1;
     private Player _player2;
     private Player _currentPlayer;
+    private BallType _ballOn;
+    private List<Ball> _ballsPottedThisTurn;
+    private bool _hasToChangePlayerAtEndOfTurn;
     
     public void Init()
     {
@@ -13,6 +17,10 @@ public class GameRules
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
 
         InitPlayers();
+        
+        _ballOn = BallType.Red;
+        _ballsPottedThisTurn = new List<Ball>();
+        _hasToChangePlayerAtEndOfTurn = false;
     }
 
     private void InitPlayers()
@@ -22,12 +30,19 @@ public class GameRules
 
         _player2 = new Player(2);
         _player2.Init();
-        
+
         _currentPlayer = _player1;
     }
 
     public void StartNewTurn()
     {
+        _ballsPottedThisTurn.Clear();
+        
+        if (!_hasToChangePlayerAtEndOfTurn)
+        {
+            return;
+        }
+        
         if (_currentPlayer == _player1)
         {
             _currentPlayer = _player2;
@@ -51,8 +66,34 @@ public class GameRules
 
     private void OnBallEnteredPot(BallEnteredPot msg)
     {
-        //TODO - rule check if legal pot
+        _ballsPottedThisTurn.Add(msg.Ball);
+    }
+
+    public void CheckScoreThisTurn()
+    {
+        if (_ballsPottedThisTurn.Count == 0)
+        {
+            _hasToChangePlayerAtEndOfTurn = true;
+            return;
+        }
+
+        if (_ballsPottedThisTurn.Count > 1)
+        {
+            //foul
+            //respot balls if needed
+            _hasToChangePlayerAtEndOfTurn = true;
+            return;
+        }
+
+        var singleBallPotted = _ballsPottedThisTurn[0];
+        if (singleBallPotted.BallType != _ballOn)
+        {
+            //foul
+            //respot balls if needed
+            _hasToChangePlayerAtEndOfTurn = true;
+            return;
+        }
         
-        _currentPlayer.AddScore(msg.Ball.ScoreWhenPotted);
+        _currentPlayer.AddScore(singleBallPotted.ScoreWhenPotted);
     }
 }

@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
         _ballsMovingAmount--;
         if (_ballsMovingAmount == 0)
         {
+            _gameRules.CheckScoreThisTurn();
+            
             _gameRules.StartNewTurn();
             _gameHUD.StartNewTurn();
             _cameraDirector.StartNewTurn();
