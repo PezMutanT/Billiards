@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CameraDirector : MonoBehaviour
 {
@@ -60,9 +59,18 @@ public class CameraDirector : MonoBehaviour
         }
     }
 
-    public void StartNewTurn()
+    public void StartNewTurn(Vector3 nextBallOnPosition)
     {
         ActivateCamera(CameraType.PLAYER);
+
+        var orbitAroundTarget = _currentCamera.GetComponent<OrbitAroundTarget>();
+        if (orbitAroundTarget == null)
+        {
+            Debug.LogError("Player camera does not contain OrbitAroundTarget component.");
+            return;
+        }
+        
+        orbitAroundTarget.SetPositionLookingAtBothTargets(nextBallOnPosition);
     }
 
     public void End()
