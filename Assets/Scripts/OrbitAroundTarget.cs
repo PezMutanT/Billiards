@@ -111,9 +111,4 @@ public class OrbitAroundTarget : GameCamera
 
         transform.rotation = newRotation;
     }
-
-    public void OnEnable()
-    {
-        SetPositionLookingAtBothTargets(Vector3.zero);
-    }
 }

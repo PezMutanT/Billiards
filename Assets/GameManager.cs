@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Messaging;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     private GameRules _gameRules;
     private int _ballsMovingAmount;
+
+    private List<Ball> AllBalls => _gameSetup.AllBalls;
 
     void Awake()
     {
@@ -39,7 +42,7 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
         Messenger.AddListener<PlayerAnnouncedShot>(OnPlayerAnnouncedShot);
 
-        _gameRules.Init();
+        _gameRules.Init(AllBalls);
         _gameHUD.Init();
         _cue.Init();
         _whiteBall.Init();
@@ -64,7 +67,7 @@ public class GameManager : MonoBehaviour
             
             _gameRules.StartNewTurn();
             _gameHUD.StartNewTurn();
-            _cameraDirector.StartNewTurn();
+            _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
             _cue.StartNewTurn();
         }
     }

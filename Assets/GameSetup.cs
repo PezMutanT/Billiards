@@ -12,7 +12,9 @@ public class GameSetup : MonoBehaviour
     [SerializeField] protected GameObject _yellowBallPrefab;
     [SerializeField] protected GameObject _redBallPrefab;
 
-    private List<GameObject> _allBalls = new List<GameObject>();
+    public List<Ball> AllBalls => _allBalls;
+    
+    private List<Ball> _allBalls;
     
     private const float _ballSize = 0.525f;
     private const float _ballOffsetConstant = 0.8661f;
@@ -25,6 +27,8 @@ public class GameSetup : MonoBehaviour
     
     private void SetupBalls()
     {
+        _allBalls = new List<Ball>();
+        
         var meshScale = _tableMesh.transform.localScale;
         var tableLength = _tableMesh.bounds.size.x;
         var halfTableLength = tableLength * 0.5f;
@@ -43,18 +47,19 @@ public class GameSetup : MonoBehaviour
         }
         _allBalls.Clear();
         
-        _allBalls.Add(Instantiate(_blackBallPrefab, new Vector3(blackSpotX, 0f, 0f), Quaternion.identity));
-        _allBalls.Add(Instantiate(_pinkBallPrefab, new Vector3(pinkSpotX, 0f, 0f), Quaternion.identity));
-        _allBalls.Add(Instantiate(_blueBallPrefab, new Vector3(blueSpotX, 0f, 0f), Quaternion.identity));
-        _allBalls.Add(Instantiate(_brownBallPrefab, new Vector3(brownSpotX, 0f, 0f), Quaternion.identity));
-        _allBalls.Add(Instantiate(_greenBallPrefab, new Vector3(brownSpotX, 0f, greenSpotY), Quaternion.identity));
-        _allBalls.Add(Instantiate(_yellowBallPrefab, new Vector3(brownSpotX, 0f, yellowSpotY), Quaternion.identity));
+        _allBalls.Add(Instantiate(_blackBallPrefab, new Vector3(blackSpotX, 0f, 0f), Quaternion.identity).GetComponent<Ball>());
+        _allBalls.Add(Instantiate(_pinkBallPrefab, new Vector3(pinkSpotX, 0f, 0f), Quaternion.identity).GetComponent<Ball>());
+        _allBalls.Add(Instantiate(_blueBallPrefab, new Vector3(blueSpotX, 0f, 0f), Quaternion.identity).GetComponent<Ball>());
+        _allBalls.Add(Instantiate(_brownBallPrefab, new Vector3(brownSpotX, 0f, 0f), Quaternion.identity).GetComponent<Ball>());
+        _allBalls.Add(Instantiate(_greenBallPrefab, new Vector3(brownSpotX, 0f, greenSpotY), Quaternion.identity).GetComponent<Ball>());
+        _allBalls.Add(Instantiate(_yellowBallPrefab, new Vector3(brownSpotX, 0f, yellowSpotY), Quaternion.identity).GetComponent<Ball>());
 
         SetupRedBalls(firstRedSpotX);
     }
 
     private void SetupRedBalls(float firstRedSpotX)
     {
+        var redBallNameIndex = 1;
         for (var i = 0; i < 5; i++)
         {
             for (var j = 0; j < (i + 1); j++)
@@ -64,22 +69,18 @@ public class GameSetup : MonoBehaviour
                     0f,
                     (-0.5f * i * _ballSize) + j * _ballSize);
 
-                _allBalls.Add(Instantiate(_redBallPrefab, newBallPosition, Quaternion.identity));
+                var redBall = Instantiate(_redBallPrefab, newBallPosition, Quaternion.identity).GetComponent<Ball>();
+                redBall.name = $"Red {redBallNameIndex}";
+                redBallNameIndex++;
+                _allBalls.Add(redBall);
             }
         }
     }
     
     private void InitBalls()
     {
-        foreach (var ballGameObject in _allBalls)
+        foreach (var ball in _allBalls)
         {
-            Ball ball = ballGameObject.GetComponent<Ball>();
-            if (ball == null)
-            {
-                Debug.LogError($"Error loading ball {ballGameObject.name}");
-                return;
-            }
-            
             ball.Init();
         }
     }

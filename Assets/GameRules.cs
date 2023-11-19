@@ -7,19 +7,23 @@ public class GameRules
     private Player _player1;
     private Player _player2;
     private Player _currentPlayer;
-    private BallType _ballOn;
+    private List<Ball> _ballsInPlay;
     private List<Ball> _ballsPottedThisTurn;
+    private BallOnDecider _ballOnDecider;
     private bool _hasToChangePlayerAtEndOfTurn;
+
+    public Vector3 NextBallOnPosition => _ballOnDecider.NextBallOnPosition();
     
-    public void Init()
+    public void Init(List<Ball> allBalls)
     {
         Messenger.AddListener<BallCollidedWithBall>(OnBallCollidedWithBall);
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
 
         InitPlayers();
         
-        _ballOn = BallType.Red;
+        _ballsInPlay = allBalls;
         _ballsPottedThisTurn = new List<Ball>();
+        _ballOnDecider = new BallOnDecider(_ballsInPlay);
         _hasToChangePlayerAtEndOfTurn = false;
     }
 
@@ -51,6 +55,8 @@ public class GameRules
         {
             _currentPlayer = _player1;
         }
+
+        _hasToChangePlayerAtEndOfTurn = false;
     }
 
     public void End()
@@ -74,6 +80,7 @@ public class GameRules
         if (_ballsPottedThisTurn.Count == 0)
         {
             _hasToChangePlayerAtEndOfTurn = true;
+            _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
         }
 
@@ -82,18 +89,24 @@ public class GameRules
             //foul
             //respot balls if needed
             _hasToChangePlayerAtEndOfTurn = true;
+            _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
         }
 
         var singleBallPotted = _ballsPottedThisTurn[0];
-        if (singleBallPotted.BallType != _ballOn)
+        if (!_ballOnDecider.IsPottedBallAllowed(singleBallPotted.BallType))
         {
             //foul
             //respot balls if needed
             _hasToChangePlayerAtEndOfTurn = true;
+            _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
         }
         
         _currentPlayer.AddScore(singleBallPotted.ScoreWhenPotted);
+    
+        _ballsInPlay.Remove(singleBallPotted);
+
+        _ballOnDecider.DetermineNextBallOnForSamePlayer(_hasToChangePlayerAtEndOfTurn, singleBallPotted.BallType);
     }
 }
