@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class GameSetup : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer _tableMesh;
     [SerializeField] protected GameObject _blackBallPrefab;
     [SerializeField] protected GameObject _pinkBallPrefab;
     [SerializeField] protected GameObject _blueBallPrefab;
@@ -15,7 +14,9 @@ public class GameSetup : MonoBehaviour
     public List<Ball> AllBalls => _allBalls;
     
     private List<Ball> _allBalls;
-    
+
+    private const float _tableLength = 35.69f;
+    //private const float _tableWidth = 17.78f;
     private const float _ballSize = 0.525f;
     private const float _ballOffsetConstant = 0.8661f;
 
@@ -29,9 +30,7 @@ public class GameSetup : MonoBehaviour
     {
         _allBalls = new List<Ball>();
         
-        var meshScale = _tableMesh.transform.localScale;
-        var tableLength = _tableMesh.bounds.size.x;
-        var halfTableLength = tableLength * 0.5f;
+        var halfTableLength = _tableLength * 0.5f;
 
         var blackSpotX = -halfTableLength + MetersToUnityUnits(0.324f);
         var pinkSpotX = blackSpotX * 0.5f;
