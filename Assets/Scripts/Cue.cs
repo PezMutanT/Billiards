@@ -8,7 +8,6 @@ public class Cue : MonoBehaviour
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Rigidbody _whiteBallRigidBody;
     [SerializeField] private float _distanceToWhiteBall;
-    [SerializeField] private float _forceChargeOverTime;
     [SerializeField] private Transform _trajectoryRoot;
     
     private bool _isCharging = false;
@@ -43,7 +42,7 @@ public class Cue : MonoBehaviour
     {
         if (_isCharging)
         {
-            ForceMagnitude += _forceChargeOverTime * Time.deltaTime;
+            ForceMagnitude += _globalConfiguration.ForceChargeVelocity * Time.deltaTime;
         }
     }
 
