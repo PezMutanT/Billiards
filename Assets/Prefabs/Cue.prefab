@@ -166,7 +166,7 @@ MonoBehaviour:
   _rigidBody: {fileID: 7724749294266271870}
   _whiteBallRigidBody: {fileID: 0}
   _distanceToWhiteBall: 1
-  _forceChargeOverTime: 100
+  _forceChargeOverTime: 10000
   _trajectoryRoot: {fileID: 7288456753090992667}
 --- !u!1 &7974637003980596784
 GameObject:

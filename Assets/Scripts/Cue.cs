@@ -43,7 +43,7 @@ public class Cue : MonoBehaviour
     {
         if (_isCharging)
         {
-            ForceMagnitude += _forceChargeOverTime;
+            ForceMagnitude += _forceChargeOverTime * Time.deltaTime;
         }
     }
 
