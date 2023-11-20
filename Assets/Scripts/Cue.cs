@@ -14,11 +14,23 @@ public class Cue : MonoBehaviour
     private bool _isCharging = false;
     private bool _isShooting = false;
     private float _forceMagnitude;
+    private float ForceMagnitude
+    {
+        get => _forceMagnitude;
+        set
+        {
+            Messenger.Send(new ShootForceMagnitudeChanged(value));
+            _forceMagnitude = value;
+        }
+    }
 
     public void Init()
     {
         _isCharging = false;
         _isShooting = false;
+        
+        Messenger.AddListener<ShootChargingStarted>(OnShootChargingStarted);
+        Messenger.AddListener<ShootChargingFinished>(OnShootChargingFinished);
     }
 
     private void OnDrawGizmos()
@@ -29,21 +41,9 @@ public class Cue : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _isCharging = true;
-        }
-        
         if (_isCharging)
         {
-            _forceMagnitude += _forceChargeOverTime;
-        }
-        
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            _isCharging = false;
-
-            StartCoroutine(ShootWithDelay());
+            ForceMagnitude += _forceChargeOverTime;
         }
     }
 
@@ -91,7 +91,7 @@ public class Cue : MonoBehaviour
     private void Shoot()
     {
         var forceMagnitude = Mathf.Clamp(
-            _forceMagnitude,
+            ForceMagnitude,
             _globalConfiguration.MinCueForceMagnitude,
             _globalConfiguration.MaxCueForceMagnitude);
         
@@ -99,17 +99,35 @@ public class Cue : MonoBehaviour
         _isShooting = true;
         _rigidBody.AddForce(transform.forward * forceMagnitude);
         
-        _forceMagnitude = 0f;
+        ForceMagnitude = 0f;
     }
 
     public void DebugShoot(float forceMagnitude)
     {
-        _forceMagnitude = forceMagnitude;
+        ForceMagnitude = forceMagnitude;
         StartCoroutine(ShootWithDelay());
     }
 
     public void StartNewTurn()
     {
         _isShooting = false;
+    }
+
+    public void End()
+    {
+        Messenger.RemoveListener<ShootChargingStarted>(OnShootChargingStarted);
+        Messenger.RemoveListener<ShootChargingFinished>(OnShootChargingFinished);
+    }
+
+    private void OnShootChargingStarted(ShootChargingStarted msg)
+    {
+        _isCharging = true;
+    }
+
+    private void OnShootChargingFinished(ShootChargingFinished msg)
+    {
+        _isCharging = false;
+
+        StartCoroutine(ShootWithDelay());
     }
 }

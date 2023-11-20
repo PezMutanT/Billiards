@@ -79,6 +79,8 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
+        _cue.End();
+        _gameHUD.End();
         _gameRules.End();
         
         Messenger.RemoveListener<BallStartedMoving>(OnBallStartedMoving);

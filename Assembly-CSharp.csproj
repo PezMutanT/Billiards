@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scenes\FPS\FPSCounter.cs" />
      <Compile Include="Assets\Scripts\CueCollider.cs" />
      <Compile Include="Assets\Scenes\ColliderTest\IResetableObject.cs" />
+     <Compile Include="Assets\Scripts\UI\ShootGauge.cs" />
      <Compile Include="Assets\Scripts\OrbitAroundTarget.cs" />
      <Compile Include="Assets\WasdNavigation.cs" />
      <Compile Include="Assets\Pot.cs" />

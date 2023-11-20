@@ -77,7 +77,25 @@ namespace Messaging
             Direction = direction;
         }
     }
-    
+
+    public class ShootChargingStarted : Message
+    {
+    }
+
+    public class ShootChargingFinished : Message
+    {
+    }
+
+    public class ShootForceMagnitudeChanged : Message
+    {
+        public float NewValue;
+        
+        public ShootForceMagnitudeChanged(float newValue)
+        {
+            NewValue = newValue;
+        }
+    }
+
     public static class Messenger
     {
         private static readonly Dictionary<Type, List<Delegate>> _listenersByMessage = new Dictionary<Type, List<Delegate>>();
