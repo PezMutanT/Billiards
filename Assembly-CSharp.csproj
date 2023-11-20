@@ -85,7 +85,6 @@
      <Compile Include="Assets\TableFrictionTest1.cs" />
      <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\TableFrictionTest.cs" />
-     <Compile Include="Assets\Scripts\BallOnDecider.cs" />
      <Compile Include="Assets\PotConfiguration.cs" />
      <Compile Include="Assets\GlobalConfiguration.cs" />
      <Compile Include="Assets\BallsConfiguration.cs" />
