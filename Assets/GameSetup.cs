@@ -31,7 +31,6 @@ public class GameSetup : MonoBehaviour
         _allBalls = new List<Ball>();
         
         var halfTableLength = _tableLength * 0.5f;
-
         var blackSpotX = -halfTableLength + MetersToUnityUnits(0.324f);
         var pinkSpotX = blackSpotX * 0.5f;
         var blueSpotX = 0.0f;
