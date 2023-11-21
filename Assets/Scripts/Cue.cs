@@ -32,12 +32,6 @@ public class Cue : MonoBehaviour
         Messenger.AddListener<ShootChargingFinished>(OnShootChargingFinished);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * 60f);
-    }
-
     private void Update()
     {
         if (_isCharging)
