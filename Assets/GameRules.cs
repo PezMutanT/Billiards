@@ -87,7 +87,7 @@ public class GameRules
         if (_ballsPottedThisTurn.Count > 1)
         {
             //foul
-            //respot balls if needed
+            RespotBallsIfNeeded();
             _hasToChangePlayerAtEndOfTurn = true;
             _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
@@ -97,7 +97,7 @@ public class GameRules
         if (!_ballOnDecider.IsPottedBallAllowed(singleBallPotted.BallType))
         {
             //foul
-            //respot balls if needed
+            RespotBallsIfNeeded();
             _hasToChangePlayerAtEndOfTurn = true;
             _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
@@ -108,5 +108,16 @@ public class GameRules
         _ballsInPlay.Remove(singleBallPotted);
 
         _ballOnDecider.DetermineNextBallOnForSamePlayer(_hasToChangePlayerAtEndOfTurn, singleBallPotted.BallType);
+    }
+
+    private void RespotBallsIfNeeded()
+    {
+        foreach (var ball in _ballsPottedThisTurn)
+        {
+            if (ball.BallType == BallType.White)
+            {
+                ball.Respot();
+            }
+        }
     }
 }

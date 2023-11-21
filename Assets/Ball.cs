@@ -100,4 +100,11 @@ public class Ball : MonoBehaviour
 
         _previousVelocity = _rigidbody.velocity;
     }
+
+    public void Respot()
+    {
+        ForceStop();
+        transform.position = _initialPosition;
+        _rigidbody.useGravity = true;
+    }
 }
