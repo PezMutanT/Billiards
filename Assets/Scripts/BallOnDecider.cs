@@ -23,8 +23,7 @@ public class BallOnDecider
 
     public bool IsPottedBallAllowed(BallType pottedBallType)
     {
-        var foundBallType = _ballOnAllowedTypes.Find(ballType => ballType == pottedBallType);
-        return foundBallType != null;
+        return _ballOnAllowedTypes.Contains(pottedBallType);
     }
 
     public void DetermineNextBallOnForSamePlayer(bool hasToChangePlayerAtEndOfTurn, BallType pottedBallType)
