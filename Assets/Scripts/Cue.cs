@@ -9,6 +9,7 @@ public class Cue : MonoBehaviour
     [SerializeField] private Rigidbody _whiteBallRigidBody;
     [SerializeField] private float _distanceToWhiteBall;
     [SerializeField] private Transform _trajectoryRoot;
+    [SerializeField] private Transform _trajectoryHitPoint;
     
     private bool _isCharging = false;
     private bool _isShooting = false;
@@ -56,9 +57,6 @@ public class Cue : MonoBehaviour
         var whiteBallPosition = _whiteBallRigidBody.transform.position;
         transform.position = whiteBallPosition - transform.forward.normalized * _distanceToWhiteBall;
         
-        
-        
-        //sphere cast
         var ballRadius = _whiteBallRigidBody.gameObject.GetComponent<SphereCollider>().radius * _whiteBallRigidBody.transform.localScale.x;
         if (Physics.SphereCast(
                 _whiteBallRigidBody.transform.position,
@@ -69,6 +67,7 @@ public class Cue : MonoBehaviour
                 LayerMask.GetMask("RaycastBalls", "Table")))
         {
             _trajectoryRoot.localScale = new Vector3(1f, 1f, hit.distance);
+            _trajectoryHitPoint.transform.position = whiteBallPosition + transform.forward * hit.distance;
         }
     }
 
