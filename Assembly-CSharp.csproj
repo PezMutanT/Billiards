@@ -91,9 +91,11 @@
      <Compile Include="Assets\BallsConfiguration.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <Folder Include="Assets\Fonts" />
      <Folder Include="Assets\Settings" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
+     <Folder Include="Assets\Textures\UI" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
      <Folder Include="Assets\Prefabs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
