@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private SoundManager _soundManager;
     [SerializeField] private GameHUD _gameHUD;
     [SerializeField] private CameraDirector _cameraDirector;
     [SerializeField] private GameSetup _gameSetup;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     private GameRules _gameRules;
     private int _ballsMovingAmount;
+    private bool _isFirstInitialization;
 
     private List<Ball> AllBalls => _gameSetup.AllBalls;
 
@@ -28,6 +30,9 @@ public class GameManager : MonoBehaviour
 
     private void InitObjects()
     {
+        _isFirstInitialization = true;
+
+        _soundManager.Init();
         _gameSetup.Init();
 
         _gameRules = new GameRules();
@@ -42,8 +47,8 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
         Messenger.AddListener<PlayerAnnouncedShot>(OnPlayerAnnouncedShot);
 
-        _gameRules.Init(AllBalls);
         _gameHUD.Init();
+        _gameRules.Init(AllBalls);
         _cue.Init();
         _whiteBall.Init();
     }
@@ -63,10 +68,14 @@ public class GameManager : MonoBehaviour
         _ballsMovingAmount--;
         if (_ballsMovingAmount == 0)
         {
+            if (_isFirstInitialization)
+            {
+                _isFirstInitialization = false;
+                return;
+            }
+
             _gameRules.CheckScoreThisTurn();
-            
             _gameRules.StartNewTurn();
-            _gameHUD.StartNewTurn();
             _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
             _cue.StartNewTurn();
         }
@@ -88,6 +97,7 @@ public class GameManager : MonoBehaviour
         Messenger.RemoveListener<PlayerAnnouncedShot>(OnPlayerAnnouncedShot);
 
         _cameraDirector.End();
+        _soundManager.End();
     }
 
     public void DebugResetGame()

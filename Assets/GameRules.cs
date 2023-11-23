@@ -6,7 +6,17 @@ public class GameRules
 {
     private Player _player1;
     private Player _player2;
+
     private Player _currentPlayer;
+    private Player CurrentPlayer
+    {
+        get => _currentPlayer;
+        set
+        {
+            _currentPlayer = value;
+            Messenger.Send(new PlayerChanged(_currentPlayer));
+        }
+    }
     private List<Ball> _ballsInPlay;
     private List<Ball> _ballsPottedThisTurn;
     private List<Ball> _ballsPottedPreviousTurn;
@@ -37,7 +47,7 @@ public class GameRules
         _player2 = new Player(2);
         _player2.Init();
 
-        _currentPlayer = _player1;
+        CurrentPlayer = _player1;
     }
 
     public void StartNewTurn()
@@ -52,15 +62,15 @@ public class GameRules
         _ballsPottedPreviousTurn.Clear();
         _ballsPottedThisTurn.Clear();
 
-        if (_currentPlayer == _player1)
+        if (CurrentPlayer == _player1)
         {
-            _currentPlayer = _player2;
+            CurrentPlayer = _player2;
         }
         else
         {
-            _currentPlayer = _player1;
+            CurrentPlayer = _player1;
         }
-
+        
         _hasToChangePlayerAtEndOfTurn = false;
     }
 
@@ -110,7 +120,7 @@ public class GameRules
             return;
         }
         
-        _currentPlayer.AddScore(singleBallPotted.ScoreWhenPotted);
+        CurrentPlayer.AddScore(singleBallPotted.ScoreWhenPotted);
     
         _ballsInPlay.Remove(singleBallPotted);
 

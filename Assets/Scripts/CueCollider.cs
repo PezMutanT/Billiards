@@ -5,6 +5,7 @@ public class CueCollider : MonoBehaviour
 {
     [SerializeField] private Rigidbody _thisRigidBody;
     [SerializeField] private Rigidbody _whiteBallRigidBody;
+    [SerializeField] private AudioSource _audioSource;
 
     private Vector3 _initialLocalPosition;
     
@@ -18,8 +19,9 @@ public class CueCollider : MonoBehaviour
         var otherRigidBody = other.gameObject.GetComponent<Rigidbody>();
         if (otherRigidBody != null && otherRigidBody == _whiteBallRigidBody)
         {
-            Debug.Log($"Kike - Collided");
             _thisRigidBody.velocity = Vector3.zero;
+            
+            _audioSource.Play();
             
             StartCoroutine(ResetLocalPosition());
         }

@@ -22,7 +22,6 @@ public class BallCollider : MonoBehaviour
             return;
         }
     
-        Debug.Log($"Ball {gameObject.name} collided with {otherBall.gameObject.name}");
-        Messenger.Send(new BallCollidedWithBall(_thisBall, otherBall));
+        Messenger.Send(new BallCollidedWithBall(_thisBall, _rigidbody.velocity.sqrMagnitude, otherBall));
     }
 }

@@ -11,11 +11,16 @@ namespace Messaging
     public class BallCollidedWithBall : Message
     {
         public readonly Ball BallA;
+        public readonly float BallAVelocitySqrMagnitude;
         public readonly Ball BallB;
         
-        public BallCollidedWithBall(Ball ballA, Ball ballB)
+        public BallCollidedWithBall(
+            Ball ballA,
+            float ballAVelocitySqrMagnitude,
+            Ball ballB)
         {
             BallA = ballA;
+            BallAVelocitySqrMagnitude = ballAVelocitySqrMagnitude;
             BallB = ballB;
         }
     }
@@ -93,6 +98,16 @@ namespace Messaging
         public ShootForceMagnitudeChanged(float newValue)
         {
             NewValue = newValue;
+        }
+    }
+
+    public class PlayerChanged : Message
+    {
+        public Player CurrentPlayer;
+
+        public PlayerChanged(Player currentPlayer)
+        {
+            CurrentPlayer = currentPlayer;
         }
     }
 
