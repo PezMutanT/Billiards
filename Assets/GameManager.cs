@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private SoundManager _soundManager;
     [SerializeField] private GameHUD _gameHUD;
     [SerializeField] private CameraDirector _cameraDirector;
     [SerializeField] private GameSetup _gameSetup;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void InitObjects()
     {
+        _soundManager.Init();
         _gameSetup.Init();
 
         _gameRules = new GameRules();
@@ -88,6 +90,7 @@ public class GameManager : MonoBehaviour
         Messenger.RemoveListener<PlayerAnnouncedShot>(OnPlayerAnnouncedShot);
 
         _cameraDirector.End();
+        _soundManager.End();
     }
 
     public void DebugResetGame()

@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scenes\ForceVsImpulse\ApplyForceTest.cs" />
      <Compile Include="Assets\Scenes\ForceVsImpulse\ApplyImpulseTest.cs" />
      <Compile Include="Assets\Sandbox\DebugLineDrawer.cs" />
+     <Compile Include="Assets\Scripts\Sound\SoundManager.cs" />
      <Compile Include="Assets\Scenes\ColliderTest\TestBall.cs" />
      <Compile Include="Assets\Scripts\UI\GameHUD.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
@@ -94,6 +95,7 @@
      <Folder Include="Assets\Fonts" />
      <Folder Include="Assets\Settings" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <Folder Include="Assets\Scripts\Sound" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
      <Folder Include="Assets\Textures\UI" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
