@@ -40,7 +40,7 @@ public class VelocityReducer : MonoBehaviour
         
         if (_rigidbody.velocity.sqrMagnitude <= _globalConfiguration.BallMinVelocityThreshold)
         {
-            Debug.Log($"{gameObject.name} min velocity threshold triggered at {_rigidbody.velocity.x:0.0000},{_rigidbody.velocity.y:0.0000},{_rigidbody.velocity.z:0.0000}");
+            // Debug.Log($"{gameObject.name} min velocity threshold triggered at {_rigidbody.velocity.x:0.0000},{_rigidbody.velocity.y:0.0000},{_rigidbody.velocity.z:0.0000}");
             _isBallMoving = false;
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;

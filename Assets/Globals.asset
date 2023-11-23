@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallMinVelocityThreshold: 0.01
   BallsSleepThreshold: 50
+  ForceChargeVelocity: 10000
   MinCueForceMagnitude: 1000
   MaxCueForceMagnitude: 20000
   ShootDelaySeconds: 2

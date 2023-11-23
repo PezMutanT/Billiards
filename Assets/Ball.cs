@@ -89,15 +89,22 @@ public class Ball : MonoBehaviour
         
         if (_previousVelocity == Vector3.zero && _rigidbody.velocity != Vector3.zero)
         {
-            Debug.Log($"Ball {name} started moving");
+            // Debug.Log($"Ball {name} started moving");
             Messenger.Send(new BallStartedMoving(this));
         }
         else if (_previousVelocity != Vector3.zero && _rigidbody.velocity == Vector3.zero)
         {
-            Debug.Log($"Ball {name} stopped moving");
+            // Debug.Log($"Ball {name} stopped moving");
             Messenger.Send(new BallStoppedMoving(this));
         }
 
         _previousVelocity = _rigidbody.velocity;
+    }
+
+    public void Respot()
+    {
+        ForceStop();
+        transform.position = _initialPosition;
+        _rigidbody.useGravity = true;
     }
 }

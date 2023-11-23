@@ -8,42 +8,36 @@ public class Cue : MonoBehaviour
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Rigidbody _whiteBallRigidBody;
     [SerializeField] private float _distanceToWhiteBall;
-    [SerializeField] private float _forceChargeOverTime;
     [SerializeField] private Transform _trajectoryRoot;
+    [SerializeField] private Transform _trajectoryHitPoint;
     
     private bool _isCharging = false;
     private bool _isShooting = false;
     private float _forceMagnitude;
+    private float ForceMagnitude
+    {
+        get => _forceMagnitude;
+        set
+        {
+            Messenger.Send(new ShootForceMagnitudeChanged(value));
+            _forceMagnitude = value;
+        }
+    }
 
     public void Init()
     {
         _isCharging = false;
         _isShooting = false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * 60f);
+        
+        Messenger.AddListener<ShootChargingStarted>(OnShootChargingStarted);
+        Messenger.AddListener<ShootChargingFinished>(OnShootChargingFinished);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _isCharging = true;
-        }
-        
         if (_isCharging)
         {
-            _forceMagnitude += _forceChargeOverTime;
-        }
-        
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            _isCharging = false;
-
-            StartCoroutine(ShootWithDelay());
+            ForceMagnitude += _globalConfiguration.ForceChargeVelocity * Time.deltaTime;
         }
     }
 
@@ -63,9 +57,6 @@ public class Cue : MonoBehaviour
         var whiteBallPosition = _whiteBallRigidBody.transform.position;
         transform.position = whiteBallPosition - transform.forward.normalized * _distanceToWhiteBall;
         
-        
-        
-        //sphere cast
         var ballRadius = _whiteBallRigidBody.gameObject.GetComponent<SphereCollider>().radius * _whiteBallRigidBody.transform.localScale.x;
         if (Physics.SphereCast(
                 _whiteBallRigidBody.transform.position,
@@ -76,6 +67,7 @@ public class Cue : MonoBehaviour
                 LayerMask.GetMask("RaycastBalls", "Table")))
         {
             _trajectoryRoot.localScale = new Vector3(1f, 1f, hit.distance);
+            _trajectoryHitPoint.transform.position = whiteBallPosition + transform.forward * hit.distance;
         }
     }
 
@@ -91,7 +83,7 @@ public class Cue : MonoBehaviour
     private void Shoot()
     {
         var forceMagnitude = Mathf.Clamp(
-            _forceMagnitude,
+            ForceMagnitude,
             _globalConfiguration.MinCueForceMagnitude,
             _globalConfiguration.MaxCueForceMagnitude);
         
@@ -99,17 +91,35 @@ public class Cue : MonoBehaviour
         _isShooting = true;
         _rigidBody.AddForce(transform.forward * forceMagnitude);
         
-        _forceMagnitude = 0f;
+        ForceMagnitude = 0f;
     }
 
     public void DebugShoot(float forceMagnitude)
     {
-        _forceMagnitude = forceMagnitude;
+        ForceMagnitude = forceMagnitude;
         StartCoroutine(ShootWithDelay());
     }
 
     public void StartNewTurn()
     {
         _isShooting = false;
+    }
+
+    public void End()
+    {
+        Messenger.RemoveListener<ShootChargingStarted>(OnShootChargingStarted);
+        Messenger.RemoveListener<ShootChargingFinished>(OnShootChargingFinished);
+    }
+
+    private void OnShootChargingStarted(ShootChargingStarted msg)
+    {
+        _isCharging = true;
+    }
+
+    private void OnShootChargingFinished(ShootChargingFinished msg)
+    {
+        _isCharging = false;
+
+        StartCoroutine(ShootWithDelay());
     }
 }

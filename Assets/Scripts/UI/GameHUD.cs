@@ -6,9 +6,12 @@ public class GameHUD : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _player1ScoreText;
     [SerializeField] private TextMeshProUGUI _player2ScoreText;
-
+    [SerializeField] private ShootGauge _shootGauge;
+    
     public void Init()
     {
+        _shootGauge.Init();
+        
         _player1ScoreText.text = "0";
         _player2ScoreText.text = "0";
         
@@ -18,6 +21,8 @@ public class GameHUD : MonoBehaviour
     public void End()
     {
         Messenger.RemoveListener<PlayerScoreChanged>(OnPlayerScoreChanged);
+        
+        _shootGauge.End();
     }
 
     private void OnPlayerScoreChanged(PlayerScoreChanged msg)

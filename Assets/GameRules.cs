@@ -9,6 +9,7 @@ public class GameRules
     private Player _currentPlayer;
     private List<Ball> _ballsInPlay;
     private List<Ball> _ballsPottedThisTurn;
+    private List<Ball> _ballsPottedPreviousTurn;
     private BallOnDecider _ballOnDecider;
     private bool _hasToChangePlayerAtEndOfTurn;
 
@@ -23,6 +24,7 @@ public class GameRules
         
         _ballsInPlay = allBalls;
         _ballsPottedThisTurn = new List<Ball>();
+        _ballsPottedPreviousTurn = new List<Ball>();
         _ballOnDecider = new BallOnDecider(_ballsInPlay);
         _hasToChangePlayerAtEndOfTurn = false;
     }
@@ -40,13 +42,16 @@ public class GameRules
 
     public void StartNewTurn()
     {
-        _ballsPottedThisTurn.Clear();
-        
         if (!_hasToChangePlayerAtEndOfTurn)
         {
+            _ballsPottedPreviousTurn = new List<Ball>(_ballsPottedThisTurn);
+            _ballsPottedThisTurn.Clear();
             return;
         }
         
+        _ballsPottedPreviousTurn.Clear();
+        _ballsPottedThisTurn.Clear();
+
         if (_currentPlayer == _player1)
         {
             _currentPlayer = _player2;
@@ -77,6 +82,8 @@ public class GameRules
 
     public void CheckScoreThisTurn()
     {
+        LogPottedBalls();
+
         if (_ballsPottedThisTurn.Count == 0)
         {
             _hasToChangePlayerAtEndOfTurn = true;
@@ -87,7 +94,7 @@ public class GameRules
         if (_ballsPottedThisTurn.Count > 1)
         {
             //foul
-            //respot balls if needed
+            RespotBallsIfNeeded();
             _hasToChangePlayerAtEndOfTurn = true;
             _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
@@ -97,7 +104,7 @@ public class GameRules
         if (!_ballOnDecider.IsPottedBallAllowed(singleBallPotted.BallType))
         {
             //foul
-            //respot balls if needed
+            RespotBallsIfNeeded();
             _hasToChangePlayerAtEndOfTurn = true;
             _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
@@ -108,5 +115,55 @@ public class GameRules
         _ballsInPlay.Remove(singleBallPotted);
 
         _ballOnDecider.DetermineNextBallOnForSamePlayer(_hasToChangePlayerAtEndOfTurn, singleBallPotted.BallType);
+    }
+
+    private void LogPottedBalls()
+    {
+        Debug.Log($"[GameRules:CheckScoreThisTurn]");
+        var ballsPottedPreviousTurnString = "Balls potted previous turn";
+        foreach (var ball in _ballsPottedPreviousTurn)
+        {
+            ballsPottedPreviousTurnString += $", {ball.BallType}";
+        }
+        Debug.Log($"{ballsPottedPreviousTurnString}");
+
+        var ballsPottedThisTurn = "Balls potted this turn";
+        foreach (var ball in _ballsPottedThisTurn)
+        {
+            ballsPottedThisTurn += $", {ball.BallType}";
+        }
+        Debug.Log($"{ballsPottedThisTurn}");
+    }
+
+    private void RespotBallsIfNeeded()
+    {
+        foreach (var ball in _ballsPottedThisTurn)
+        {
+            if (ball.BallType == BallType.White ||
+                IsColorBallAfterLastRedPotted(ball))
+            {
+                ball.Respot();
+            }
+        }
+    }
+
+    private bool IsColorBallAfterLastRedPotted(Ball ball)
+    {
+        if (ball.BallType == BallType.Red)
+        {
+            return false;
+        }
+
+        if (_ballsInPlay.Find(ball => ball.BallType == BallType.Red))
+        {
+            return true;
+        }
+
+        if (_ballsPottedPreviousTurn.Find(ball => ball.BallType == BallType.Red))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

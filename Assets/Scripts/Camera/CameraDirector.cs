@@ -21,6 +21,8 @@ public class CameraDirector : MonoBehaviour
             camera.Deactivate();
             _camerasData.Add(camera.CameraType, camera);
         }
+        
+        _renderTextureGameObject.SetActive(false);
 
         _currentCamera = _camerasData[CameraType.PLAYER];
         _currentCamera.Activate();
