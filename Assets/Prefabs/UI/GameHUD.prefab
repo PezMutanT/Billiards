@@ -1846,6 +1846,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player1ScoreText: {fileID: 1574577778307549325}
   _player2ScoreText: {fileID: 7191662625478110357}
+  _player1CurrentPlayerMarker: {fileID: 9027465362072020669}
+  _player2CurrentPlayerMarker: {fileID: 2145848378244472570}
   _shootGauge: {fileID: 8782091607246626475}
 --- !u!1 &8987363365153906884
 GameObject:

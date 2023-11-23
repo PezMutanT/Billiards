@@ -101,6 +101,16 @@ namespace Messaging
         }
     }
 
+    public class PlayerChanged : Message
+    {
+        public Player CurrentPlayer;
+
+        public PlayerChanged(Player currentPlayer)
+        {
+            CurrentPlayer = currentPlayer;
+        }
+    }
+
     public static class Messenger
     {
         private static readonly Dictionary<Type, List<Delegate>> _listenersByMessage = new Dictionary<Type, List<Delegate>>();
