@@ -56,14 +56,14 @@ public class Ball : MonoBehaviour
             return;
         }
 
-        ForceStop();
+        RemoveFromGame();
         Messenger.Send(new BallStoppedMoving(this));
     }
 
     private void RemoveFromGame()
     {
         ForceStop();
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void DebugReset()
@@ -103,6 +103,7 @@ public class Ball : MonoBehaviour
 
     public void Respot()
     {
+        gameObject.SetActive(true);
         ForceStop();
         transform.position = _initialPosition;
         _rigidbody.useGravity = true;

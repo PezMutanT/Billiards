@@ -33,7 +33,7 @@ public class BallOnDecider
         if (!hasToChangePlayerAtEndOfTurn && pottedBallType == BallType.Red)
         {
             Debug.Log("Next ball on: all colors");
-            _ballOnAllowedTypes = _allColors;
+            _ballOnAllowedTypes = new List<BallType>(_allColors);
             return;
         }
 
