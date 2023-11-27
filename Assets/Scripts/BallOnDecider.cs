@@ -15,12 +15,15 @@ public class BallOnDecider
         BallType.Black
     };
 
+    public List<BallType> AllowedBallTypes => _ballOnAllowedTypes;
+
     public BallOnDecider(List<Ball> ballsInPlay)
     {
         _ballsInPlay = ballsInPlay;
         _ballOnAllowedTypes = new List<BallType>();
+        SetAllowedBallTypeToNextBallInPlay();
     }
-
+    
     public bool IsPottedBallAllowed(BallType pottedBallType)
     {
         return _ballOnAllowedTypes.Contains(pottedBallType);
