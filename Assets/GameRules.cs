@@ -23,20 +23,21 @@ public class GameRules
     private BallOnDecider _ballOnDecider;
     private bool _hasToChangePlayerAtEndOfTurn;
 
+    public List<BallType> AllowedBallTypes => _ballOnDecider.AllowedBallTypes;
     public Vector3 NextBallOnPosition => _ballOnDecider.NextBallOnPosition();
     
     public void Init(List<Ball> allBalls)
     {
         Messenger.AddListener<BallCollidedWithBall>(OnBallCollidedWithBall);
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
-
-        InitPlayers();
         
         _ballsInPlay = allBalls;
         _ballsPottedThisTurn = new List<Ball>();
         _ballsPottedPreviousTurn = new List<Ball>();
         _ballOnDecider = new BallOnDecider(_ballsInPlay);
         _hasToChangePlayerAtEndOfTurn = false;
+
+        InitPlayers();
     }
 
     private void InitPlayers()

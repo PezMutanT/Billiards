@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
         Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
         Messenger.AddListener<PlayerAnnouncedShot>(OnPlayerAnnouncedShot);
 
-        _gameHUD.Init();
         _gameRules.Init(AllBalls);
+        _gameHUD.Init(_gameRules.AllowedBallTypes);
         _cue.Init();
         _whiteBall.Init();
     }
@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
         {
             _gameRules.CheckScoreThisTurn();
             _gameRules.StartNewTurn();
+            _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
             _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
             _cue.StartNewTurn();
         }
