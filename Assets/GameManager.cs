@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
 
     private GameRules _gameRules;
     private int _ballsMovingAmount;
-    private bool _isFirstInitialization;
 
     private List<Ball> AllBalls => _gameSetup.AllBalls;
 
@@ -30,8 +29,6 @@ public class GameManager : MonoBehaviour
 
     private void InitObjects()
     {
-        _isFirstInitialization = true;
-
         _soundManager.Init();
         _gameSetup.Init();
 
@@ -61,19 +58,16 @@ public class GameManager : MonoBehaviour
     private void OnBallStartedMoving(BallStartedMoving e)
     {
         _ballsMovingAmount++;
+        
+        Debug.Log($"Balls moving (increased): {_ballsMovingAmount}");
     }
 
     private void OnBallStoppedMoving(BallStoppedMoving e)
     {
         _ballsMovingAmount--;
+        Debug.Log($"Balls moving (decreased): {_ballsMovingAmount}");
         if (_ballsMovingAmount == 0)
         {
-            if (_isFirstInitialization)
-            {
-                _isFirstInitialization = false;
-                return;
-            }
-
             _gameRules.CheckScoreThisTurn();
             _gameRules.StartNewTurn();
             _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
