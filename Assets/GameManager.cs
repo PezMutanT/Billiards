@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Messaging;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        DOTween.Init();
+
         Init();
     }
 

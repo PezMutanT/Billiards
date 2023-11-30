@@ -8,8 +8,8 @@ public class GameHUD : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _player1ScoreText;
     [SerializeField] private TextMeshProUGUI _player2ScoreText;
-    [SerializeField] private GameObject _player1CurrentPlayerMarker;
-    [SerializeField] private GameObject _player2CurrentPlayerMarker;
+    [SerializeField] private CurrentPlayerMarker _player1CurrentPlayerMarker;
+    [SerializeField] private CurrentPlayerMarker _player2CurrentPlayerMarker;
     [SerializeField] private ShootGauge _shootGauge;
     [SerializeField] private Image _nextBallOnSingleColorSprite;
     [SerializeField] private Image _nextBallOnMulticolorSprite;
@@ -18,8 +18,8 @@ public class GameHUD : MonoBehaviour
     {
         _shootGauge.Init();
         
-        _player1CurrentPlayerMarker.SetActive(false);
-        _player2CurrentPlayerMarker.SetActive(false);
+        _player1CurrentPlayerMarker.Activate();
+        _player2CurrentPlayerMarker.Deactivate();
         
         _player1ScoreText.text = "0";
         _player2ScoreText.text = "0";
@@ -40,8 +40,17 @@ public class GameHUD : MonoBehaviour
 
     private void OnPlayerChanged(PlayerChanged msg)
     {
-        _player1CurrentPlayerMarker.SetActive(msg.CurrentPlayer.PlayerNumber == 1);
-        _player2CurrentPlayerMarker.SetActive(msg.CurrentPlayer.PlayerNumber == 2);
+        var isPlayer1Turn = msg.CurrentPlayer.PlayerNumber == 1;
+        if (isPlayer1Turn)
+        {
+            _player1CurrentPlayerMarker.Activate();
+            _player2CurrentPlayerMarker.Deactivate();
+        }
+        else
+        {
+            _player1CurrentPlayerMarker.Deactivate();
+            _player2CurrentPlayerMarker.Activate();   
+        }
     }
 
     private void RefreshBallOnSprite(List<BallType> allowedBallTypes)
