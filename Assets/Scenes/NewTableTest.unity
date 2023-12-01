@@ -2040,8 +2040,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1069036284}
   _audioClips:
-  - {fileID: 8300000, guid: f4edb7b0b57b5144cabfa9dbe4ab0e17, type: 3}
-  - {fileID: 8300000, guid: 37bc52cd522301e4583d2b6181023902, type: 3}
+  - MinBallVelocity: 1
+    AudioClip: {fileID: 8300000, guid: f4edb7b0b57b5144cabfa9dbe4ab0e17, type: 3}
+  - MinBallVelocity: 100
+    AudioClip: {fileID: 8300000, guid: 37bc52cd522301e4583d2b6181023902, type: 3}
 --- !u!82 &1069036284
 AudioSource:
   m_ObjectHideFlags: 0
