@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Pot : MonoBehaviour
 {
-    [SerializeField] private PotConfiguration _potConfiguration;
-    
     private void OnTriggerEnter(Collider other)
     {
         var otherBall = other.gameObject.GetComponent<Ball>();
