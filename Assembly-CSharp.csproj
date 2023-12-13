@@ -64,6 +64,7 @@
      <Compile Include="Assets\Ball.cs" />
      <Compile Include="Assets\GameRules.cs" />
      <Compile Include="Assets\BallType.cs" />
+     <Compile Include="Assets\Scenes\MultiScenePhysics\PhysicsSceneLoader.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
      <Compile Include="Assets\Scripts\Camera\OrbitAroundTarget.cs" />
      <Compile Include="Assets\Scenes\MultipleCameras\CameraRenderToTextureTest.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Scenes\FPS\UpdateLogger.cs" />
      <Compile Include="Assets\Scripts\Cue.cs" />
      <Compile Include="Assets\VelocityReducer.cs" />
+     <Compile Include="Assets\Scenes\MultiScenePhysics\Projection.cs" />
      <Compile Include="Assets\BallConfiguration.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
      <Compile Include="Assets\Scenes\PhysicsMaterialsTest\PhysicsMaterialsTest.cs" />
@@ -88,6 +90,7 @@
      <Compile Include="Assets\BallsConfiguration.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <Folder Include="Assets\Scenes\MultiScenePhysics" />
      <Folder Include="Assets\Fonts" />
      <Folder Include="Assets\Settings" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

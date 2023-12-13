@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/NewTableTest.unity
-    guid: 4df05400092eb7646bf25dc612d03932
+    path: Assets/Scenes/MultiScenePhysics/MultiScenePhysicsMain.unity
+    guid: 699c74ec4e261a24aa4d24dbe68d42ff
+  - enabled: 1
+    path: Assets/Scenes/MultiScenePhysics/MultiScenePhysicsPhysics.unity
+    guid: 6ddb91aedb96a6a4686a9bdf2088194a
   m_configObjects: {}
