@@ -19,7 +19,7 @@ public class OrbitAroundTarget : GameCamera
     private Vector3 _originalPosition;
     private Vector3 _targetPosition;
 
-    public override void Init()
+    public /*override*/ void Init()
     {
         base.Init();
         
@@ -63,7 +63,7 @@ public class OrbitAroundTarget : GameCamera
             _deltaMouseInput.x = 0f;
             _deltaMouseInput.y = 0f;
             
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            /*Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 100f, _targetObjectsLayerMask))
             {
                 Renderer renderer = hit.collider.GetComponent<Renderer>();
@@ -71,7 +71,7 @@ public class OrbitAroundTarget : GameCamera
                 {
                     SetPositionLookingAtBothTargets(hit.transform.position);
                 }
-            }
+            }*/
         }
     }
 

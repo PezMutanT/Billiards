@@ -73,6 +73,8 @@ public class Cue : MonoBehaviour
 
     private IEnumerator ShootWithDelay()
     {
+        _isShooting = true;
+
         Messenger.Send(new PlayerAnnouncedShot(_whiteBallRigidBody.transform, transform.forward));
         
         yield return new WaitForSeconds(_globalConfiguration.ShootDelaySeconds);
@@ -88,7 +90,6 @@ public class Cue : MonoBehaviour
             _globalConfiguration.MaxCueForceMagnitude);
         
         Debug.Log($"Shooting with force magnitude: {forceMagnitude}");
-        _isShooting = true;
         _rigidBody.AddForce(transform.forward * forceMagnitude);
         
         ForceMagnitude = 0f;

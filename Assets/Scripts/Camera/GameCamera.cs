@@ -1,38 +1,37 @@
 ﻿using UnityEngine;
+using Cinemachine;
 
-[RequireComponent(typeof(Camera))]
-public class GameCamera : MonoBehaviour
+[RequireComponent(typeof(CinemachineVirtualCamera))]
+public class GameCamera : GameCameraBase
 {
-    [SerializeField] private CameraType _cameraType;
+    private CinemachineVirtualCamera _camera;
 
-    protected Camera _camera;
-    
-    public CameraType CameraType => _cameraType;
-
-    public virtual void Init()
+    public override void Init()
     {
-        _camera = GetComponent<Camera>();
+        _camera = GetComponent<CinemachineVirtualCamera>();
     }
 
-    public void Activate()
+    public override void Activate()
     {
         Debug.Log($"Activating camera {gameObject.name}...");
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
+        _camera.Priority = 1;
     }
 
-    public void Deactivate()
+    public override void Deactivate()
     {
         Debug.Log($"Deactivating camera {gameObject.name}...");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        _camera.Priority = 0;
     }
 
     public void RenderFullScreen()
     {
-        _camera.targetTexture = null;
+        //_camera.targetTexture = null;
     }
 
     public void RenderInCornerOfScreen(RenderTexture renderTexture)
     {
-        _camera.targetTexture = renderTexture;
+        //_camera.targetTexture = renderTexture;
     }
 }

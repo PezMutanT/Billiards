@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class CameraDirector : MonoBehaviour
 {
-    [SerializeField] private List<GameCamera> _gameCameras;
+    [SerializeField] private List<GameCameraBase> _gameCameras;
     [SerializeField] private RenderTexture _renderTexture;
     [SerializeField] private GameObject _renderTextureGameObject;
     [SerializeField] private List<Transform> _holes;
     
-    private Dictionary<CameraType, GameCamera> _camerasData;
-    private GameCamera _currentCamera;
-    private GameCamera _activeSecondaryCamera;
+    private Dictionary<CameraType, GameCameraBase> _camerasData;
+    private GameCameraBase _currentCamera;
+    private GameCameraBase _activeSecondaryCamera;
 
     public void Init()
     {
-        _camerasData = new Dictionary<CameraType, GameCamera>();
+        _camerasData = new Dictionary<CameraType, GameCameraBase>();
         foreach (var camera in _gameCameras)
         {
             camera.Init();
@@ -33,7 +33,7 @@ public class CameraDirector : MonoBehaviour
     {
         _currentCamera.Deactivate();
         _currentCamera = _camerasData[cameraType];
-        _currentCamera.RenderFullScreen();
+        //_currentCamera.RenderFullScreen();
         _currentCamera.Activate();
     }
 
@@ -55,7 +55,7 @@ public class CameraDirector : MonoBehaviour
         else
         {
             _renderTextureGameObject.SetActive(true);
-            newSecondaryCamera.RenderInCornerOfScreen(_renderTexture);
+            //newSecondaryCamera.RenderInCornerOfScreen(_renderTexture);
             _activeSecondaryCamera = newSecondaryCamera;
             _activeSecondaryCamera.Activate();
         }
@@ -65,14 +65,14 @@ public class CameraDirector : MonoBehaviour
     {
         ActivateCamera(CameraType.PLAYER);
 
-        var orbitAroundTarget = _currentCamera.GetComponent<OrbitAroundTarget>();
+        /*var orbitAroundTarget = _currentCamera.GetComponent<OrbitAroundTarget>();
         if (orbitAroundTarget == null)
         {
             Debug.LogError("Player camera does not contain OrbitAroundTarget component.");
             return;
         }
         
-        orbitAroundTarget.SetPositionLookingAtBothTargets(nextBallOnPosition);
+        orbitAroundTarget.SetPositionLookingAtBothTargets(nextBallOnPosition);*/
     }
 
     public void End()
