@@ -85,6 +85,7 @@
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
      <Compile Include="Assets\Scenes\PhysicsMaterialsTest\PhysicsMaterialsTest.cs" />
      <Compile Include="Assets\GameManager.cs" />
+     <Compile Include="Assets\Scenes\Cinemachine\CinemachinePlayerController.cs" />
      <Compile Include="Assets\GlobalConfiguration.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
      <Compile Include="Assets\BallsConfiguration.cs" />
@@ -142,6 +143,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <Folder Include="Assets\TextMesh Pro\Documentation" />
+     <Folder Include="Assets\Scenes\Cinemachine" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
      <Folder Include="Assets\Materials" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
