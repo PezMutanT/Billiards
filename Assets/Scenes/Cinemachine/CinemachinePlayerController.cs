@@ -10,11 +10,13 @@ public class CinemachinePlayerController : MonoBehaviour
     
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
-    
+    private CinemachineCore.AxisInputDelegate _originalInputDelegate;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _originalInputDelegate = CinemachineCore.GetInputAxis;
+        DisableCameraMoving();
     }
 
     // Update is called once per frame
@@ -23,13 +25,30 @@ public class CinemachinePlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            EnableCameraMoving();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            DisableCameraMoving();
+        }
+        
         var direccion = new Vector3(horizontalInput, 0f, verticalInput).normalized;
         
         Vector3 movimiento = direccion * _sensitivity * Time.deltaTime;
 
         transform.Translate(movimiento, Space.World);
+    }
 
-        CinemachineFreeLook a = new CinemachineFreeLook();
-        a.UpdateInputAxisProvider();
+    private void EnableCameraMoving()
+    {
+        CinemachineCore.GetInputAxis = _originalInputDelegate;
+    }
+
+    private void DisableCameraMoving()
+    {
+        CinemachineCore.GetInputAxis = (axisName) => 0;
     }
 }
