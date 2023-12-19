@@ -14,24 +14,12 @@ public class GameCamera : GameCameraBase
     public override void Activate()
     {
         Debug.Log($"Activating camera {gameObject.name}...");
-        //gameObject.SetActive(true);
         _camera.Priority = 1;
     }
 
     public override void Deactivate()
     {
         Debug.Log($"Deactivating camera {gameObject.name}...");
-        //gameObject.SetActive(false);
         _camera.Priority = 0;
-    }
-
-    public void RenderFullScreen()
-    {
-        //_camera.targetTexture = null;
-    }
-
-    public void RenderInCornerOfScreen(RenderTexture renderTexture)
-    {
-        //_camera.targetTexture = renderTexture;
     }
 }

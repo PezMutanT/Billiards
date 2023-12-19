@@ -23,12 +23,14 @@ public class PlayerCamera : GameCameraBase
     {
         Debug.Log($"Activating camera {gameObject.name}...");
         _camera.Priority = 1;
+        gameObject.SetActive(true);
     }
 
     public override void Deactivate()
     {
         Debug.Log($"Deactivating camera {gameObject.name}...");
         _camera.Priority = 0;
+        gameObject.SetActive(false);
     }
 
     private void Update()

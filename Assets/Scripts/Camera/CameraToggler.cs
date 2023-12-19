@@ -19,12 +19,12 @@ public class CameraToggler : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            _cameraDirector.ToggleSecondaryCamera(CameraType.TV);
+            _cameraDirector.ActivateCamera(CameraType.TV);
         }
         
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            _cameraDirector.ToggleSecondaryCamera(CameraType.TOP_FULL_TABLE);
+            _cameraDirector.ActivateCamera(CameraType.TOP_FULL_TABLE);
         }
     }
 }

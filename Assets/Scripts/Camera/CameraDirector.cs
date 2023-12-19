@@ -5,13 +5,11 @@ public class CameraDirector : MonoBehaviour
 {
     [SerializeField] private List<GameCameraBase> _gameCameras;
     [SerializeField] private PlayerCamera _playerCamera;
-    [SerializeField] private RenderTexture _renderTexture;
     [SerializeField] private GameObject _renderTextureGameObject;
     [SerializeField] private List<Transform> _holes;
     
     private Dictionary<CameraType, GameCameraBase> _camerasData;
     private GameCameraBase _currentCamera;
-    private GameCameraBase _activeSecondaryCamera;
 
     public void Init()
     {
@@ -27,53 +25,18 @@ public class CameraDirector : MonoBehaviour
 
         _currentCamera = _camerasData[CameraType.PLAYER];
         _currentCamera.Activate();
-        _activeSecondaryCamera = null;
     }
 
     public void ActivateCamera(CameraType cameraType)
     {
         _currentCamera.Deactivate();
         _currentCamera = _camerasData[cameraType];
-        //_currentCamera.RenderFullScreen();
         _currentCamera.Activate();
-    }
-
-    public void ToggleSecondaryCamera(CameraType cameraType)
-    {
-        var newSecondaryCamera  = _camerasData[cameraType];
-        
-        if (_activeSecondaryCamera != null)
-        {
-            _activeSecondaryCamera.Deactivate();
-        }
-
-        if (_activeSecondaryCamera == newSecondaryCamera)
-        {
-            _renderTextureGameObject.SetActive(false);
-            _activeSecondaryCamera.Deactivate();
-            _activeSecondaryCamera = null;
-        }
-        else
-        {
-            _renderTextureGameObject.SetActive(true);
-            //newSecondaryCamera.RenderInCornerOfScreen(_renderTexture);
-            _activeSecondaryCamera = newSecondaryCamera;
-            _activeSecondaryCamera.Activate();
-        }
     }
 
     public void StartNewTurn(Vector3 nextBallOnPosition)
     {
         ActivateCamera(CameraType.PLAYER);
-
-        /*var orbitAroundTarget = _currentCamera.GetComponent<OrbitAroundTarget>();
-        if (orbitAroundTarget == null)
-        {
-            Debug.LogError("Player camera does not contain OrbitAroundTarget component.");
-            return;
-        }
-        
-        orbitAroundTarget.SetPositionLookingAtBothTargets(nextBallOnPosition);*/
 
         _playerCamera.SetPositionLookingAtBothTargets(nextBallOnPosition);
     }
