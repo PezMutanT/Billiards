@@ -4,6 +4,7 @@ using UnityEngine;
 public class CameraDirector : MonoBehaviour
 {
     [SerializeField] private List<GameCameraBase> _gameCameras;
+    [SerializeField] private PlayerCamera _playerCamera;
     [SerializeField] private RenderTexture _renderTexture;
     [SerializeField] private GameObject _renderTextureGameObject;
     [SerializeField] private List<Transform> _holes;
@@ -73,6 +74,8 @@ public class CameraDirector : MonoBehaviour
         }
         
         orbitAroundTarget.SetPositionLookingAtBothTargets(nextBallOnPosition);*/
+
+        _playerCamera.SetPositionLookingAtBothTargets(nextBallOnPosition);
     }
 
     public void End()

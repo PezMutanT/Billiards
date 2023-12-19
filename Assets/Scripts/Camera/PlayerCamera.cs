@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Cinemachine;
+using UnityEngine.ProBuilder;
 
 [RequireComponent(typeof(CinemachineFreeLook))]
 public class PlayerCamera : GameCameraBase
@@ -15,6 +16,7 @@ public class PlayerCamera : GameCameraBase
         _camera = GetComponent<CinemachineFreeLook>();
         _originalInputDelegate = CinemachineCore.GetInputAxis;
         DisableCameraMoving();
+        _camera.m_XAxis.Value = -90f;
     }
 
     public override void Activate()
@@ -55,5 +57,14 @@ public class PlayerCamera : GameCameraBase
     private void LateUpdate()
     {
         _cue.UpdateFromCamera(_mainCamera.forward);
+    }
+
+    public void SetPositionLookingAtBothTargets(Vector3 nextBallOnPosition)
+    {
+        var direction = (nextBallOnPosition -_camera.LookAt.position).normalized;
+        var angleInRadians = Mathf.Atan2(direction.z, direction.x);
+        var angleInDegrees = angleInRadians * 180f / Mathf.PI;
+
+        _camera.m_XAxis.Value = 360f - angleInDegrees + 90f;
     }
 }
