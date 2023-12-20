@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using Messaging;
 using UnityEngine;
 
@@ -71,15 +72,15 @@ public class Cue : MonoBehaviour
         }
     }
 
-    private IEnumerator ShootWithDelay()
+    private void ShootWithDelay()
     {
         _isShooting = true;
 
         Messenger.Send(new PlayerAnnouncedShot(_whiteBallRigidBody.transform, transform.forward));
         
-        yield return new WaitForSeconds(_globalConfiguration.ShootDelaySeconds);
-
-        Shoot();
+        transform.DOMove(transform.position + transform.forward * (_distanceToWhiteBall - 0.4f), 0.5f)
+            .SetLoops(4, LoopType.Yoyo)
+            .OnComplete(Shoot);
     }
 
     private void Shoot()
@@ -98,7 +99,7 @@ public class Cue : MonoBehaviour
     public void DebugShoot(float forceMagnitude)
     {
         ForceMagnitude = forceMagnitude;
-        StartCoroutine(ShootWithDelay());
+        ShootWithDelay();
     }
 
     public void StartNewTurn()
@@ -121,6 +122,6 @@ public class Cue : MonoBehaviour
     {
         _isCharging = false;
 
-        StartCoroutine(ShootWithDelay());
+        ShootWithDelay();
     }
 }
