@@ -11,7 +11,8 @@ public class Cue : MonoBehaviour
     [SerializeField] private float _distanceToWhiteBall;
     [SerializeField] private Transform _trajectoryRoot;
     [SerializeField] private Transform _trajectoryHitPoint;
-    
+    [SerializeField] private Transform _cueAnimationRoot;
+        
     private bool _isCharging = false;
     private bool _isShooting = false;
     private float _forceMagnitude;
@@ -78,7 +79,7 @@ public class Cue : MonoBehaviour
 
         Messenger.Send(new PlayerAnnouncedShot(_whiteBallRigidBody.transform, transform.forward));
         
-        transform.DOMove(transform.position + transform.forward * (_distanceToWhiteBall - 0.4f), 0.5f)
+        _cueAnimationRoot.DOMove(_cueAnimationRoot.position + _cueAnimationRoot.forward * (_distanceToWhiteBall - 0.4f), 0.5f)
             .SetLoops(4, LoopType.Yoyo)
             .OnComplete(Shoot);
     }
