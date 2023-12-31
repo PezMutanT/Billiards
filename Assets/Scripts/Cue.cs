@@ -69,13 +69,16 @@ public class Cue : MonoBehaviour
                 LayerMask.GetMask("RaycastBalls", "Table")))
         {
             _trajectoryRoot.localScale = new Vector3(1f, 1f, hit.distance);
-            _trajectoryHitPoint.transform.position = whiteBallPosition + transform.forward * hit.distance;
+            _trajectoryHitPoint.position = whiteBallPosition + transform.forward * hit.distance;
         }
     }
 
     private void ShootWithDelay()
     {
         _isShooting = true;
+        
+        _trajectoryRoot.gameObject.SetActive(false);
+        _trajectoryHitPoint.gameObject.SetActive(false);
 
         Messenger.Send(new PlayerAnnouncedShot(_whiteBallRigidBody.transform, transform.forward));
         
@@ -106,6 +109,8 @@ public class Cue : MonoBehaviour
     public void StartNewTurn()
     {
         _isShooting = false;
+        _trajectoryRoot.gameObject.SetActive(true);
+        _trajectoryHitPoint.gameObject.SetActive(true);
     }
 
     public void End()
