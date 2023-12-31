@@ -108,4 +108,9 @@ public class Ball : MonoBehaviour
         transform.position = _initialPosition;
         _rigidbody.useGravity = true;
     }
+
+    public void AccelerateFall()
+    {
+        _rigidbody.AddForce(Vector3.down * 20f);
+    }
 }

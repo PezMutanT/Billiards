@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8170249029982748386}
   - component: {fileID: 3587515703863026813}
   - component: {fileID: 8238147351867666210}
+  - component: {fileID: 4241413109111099788}
   m_Layer: 0
   m_Name: SidePot
   m_TagString: Untagged
@@ -49,7 +50,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -67,7 +68,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08c141f82b028b4c9c7ac3cbd3c9ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _potConfiguration: {fileID: 0}
+--- !u!65 &4241413109111099788
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467658726015188808}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4, y: 1, z: 0.4}
+  m_Center: {x: 0, y: -0.4, z: 0.16}
 --- !u!1001 &2712312678412059580
 PrefabInstance:
   m_ObjectHideFlags: 0
