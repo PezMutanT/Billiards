@@ -1,12 +1,13 @@
-using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class CueCollider : MonoBehaviour
 {
     [SerializeField] private Rigidbody _thisRigidBody;
     [SerializeField] private Rigidbody _whiteBallRigidBody;
     [SerializeField] private AudioSource _audioSource;
-
+    [SerializeField] private Vector3 _outOfSightPosition;
+    
     private Vector3 _initialLocalPosition;
     
     private void Awake()
@@ -25,18 +26,20 @@ public class CueCollider : MonoBehaviour
 
             _thisRigidBody.detectCollisions = false;
             
-            StartCoroutine(ResetLocalPosition());
+            transform.DOMove(_outOfSightPosition, 0.7f)
+                .SetDelay(0.3f)
+                .SetEase(Ease.InSine);
         }
     }
 
-    private IEnumerator ResetLocalPosition()
+    private void ResetLocalPosition()
     {
-        yield return new WaitForSeconds(0.5f);
         transform.localPosition = _initialLocalPosition;
     }
 
     public void StartNewTurn()
     {
+        ResetLocalPosition();
         _thisRigidBody.detectCollisions = true;
     }
 }
