@@ -12,7 +12,8 @@ public class Cue : MonoBehaviour
     [SerializeField] private Transform _trajectoryRoot;
     [SerializeField] private Transform _trajectoryHitPoint;
     [SerializeField] private Transform _cueAnimationRoot;
-        
+    [SerializeField] private CueCollider _cueCollider;
+            
     private bool _isCharging = false;
     private bool _isShooting = false;
     private float _forceMagnitude;
@@ -111,6 +112,7 @@ public class Cue : MonoBehaviour
         _isShooting = false;
         _trajectoryRoot.gameObject.SetActive(true);
         _trajectoryHitPoint.gameObject.SetActive(true);
+        _cueCollider.StartNewTurn();
     }
 
     public void End()

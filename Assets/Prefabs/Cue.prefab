@@ -202,6 +202,7 @@ MonoBehaviour:
   _trajectoryRoot: {fileID: 7288456753090992667}
   _trajectoryHitPoint: {fileID: 839488630325153005}
   _cueAnimationRoot: {fileID: 8683093241730264977}
+  _cueCollider: {fileID: 6199689418189296964}
 --- !u!1 &6449127286925767966
 GameObject:
   m_ObjectHideFlags: 0

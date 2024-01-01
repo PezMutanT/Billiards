@@ -22,6 +22,8 @@ public class CueCollider : MonoBehaviour
             _thisRigidBody.velocity = Vector3.zero;
             
             _audioSource.Play();
+
+            _thisRigidBody.detectCollisions = false;
             
             StartCoroutine(ResetLocalPosition());
         }
@@ -31,5 +33,10 @@ public class CueCollider : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         transform.localPosition = _initialLocalPosition;
+    }
+
+    public void StartNewTurn()
+    {
+        _thisRigidBody.detectCollisions = true;
     }
 }
