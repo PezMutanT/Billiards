@@ -17,6 +17,20 @@ public class GameRules
             Messenger.Send(new PlayerChanged(_currentPlayer));
         }
     }
+
+    private Player OtherPlayer
+    {
+        get
+        {
+            if (_currentPlayer == _player1)
+            {
+                return _player2;
+            }
+
+            return _player1;
+        }
+    }
+    
     private List<Ball> _ballsInPlay;
     private List<Ball> _ballsPottedThisTurn;
     private List<Ball> _ballsPottedPreviousTurn;
@@ -28,7 +42,6 @@ public class GameRules
     
     public void Init(List<Ball> allBalls)
     {
-        Messenger.AddListener<BallCollidedWithBall>(OnBallCollidedWithBall);
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
         
         _ballsInPlay = allBalls;
@@ -63,14 +76,7 @@ public class GameRules
         _ballsPottedPreviousTurn.Clear();
         _ballsPottedThisTurn.Clear();
 
-        if (CurrentPlayer == _player1)
-        {
-            CurrentPlayer = _player2;
-        }
-        else
-        {
-            CurrentPlayer = _player1;
-        }
+        CurrentPlayer = OtherPlayer;
         
         _hasToChangePlayerAtEndOfTurn = false;
     }
@@ -78,12 +84,6 @@ public class GameRules
     public void End()
     {
         Messenger.RemoveListener<BallEnteredPot>(OnBallEnteredPot);
-        Messenger.RemoveListener<BallCollidedWithBall>(OnBallCollidedWithBall);
-    }
-
-    private void OnBallCollidedWithBall(BallCollidedWithBall msg)
-    {
-        Debug.Log($"Ball {msg.BallA.BallType} collided with ball {msg.BallB.BallType}");
     }
 
     private void OnBallEnteredPot(BallEnteredPot msg)
@@ -176,5 +176,15 @@ public class GameRules
         }
 
         return false;
+    }
+
+    public bool IsLegalFirstContactWithWhiteBall(BallType nonWhiteBallType)
+    {
+        return _ballOnDecider.IsFirstBallHitAllowed(nonWhiteBallType);
+    }
+
+    public void PenaltyCurrentPlayer(int penaltyValue)
+    {
+        OtherPlayer.AddScore(penaltyValue);
     }
 }

@@ -23,8 +23,18 @@ public class BallOnDecider
         _ballOnAllowedTypes = new List<BallType>();
         SetAllowedBallTypeToNextBallInPlay();
     }
+
+    public bool IsFirstBallHitAllowed(BallType nonWhiteBallType)
+    {
+        return IsBallAllowed(nonWhiteBallType);
+    }
     
     public bool IsPottedBallAllowed(BallType pottedBallType)
+    {
+        return IsBallAllowed(pottedBallType);
+    }
+
+    private bool IsBallAllowed(BallType pottedBallType)
     {
         return _ballOnAllowedTypes.Contains(pottedBallType);
     }
