@@ -18,3 +18,5 @@ MonoBehaviour:
   MinCueForceMagnitude: 1000
   MaxCueForceMagnitude: 20000
   ShootDelaySeconds: 2
+  CameraInputSensitivityLow: 10
+  CameraInputSensitivityHigh: 100

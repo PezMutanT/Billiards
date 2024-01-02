@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Cinemachine;
-using UnityEngine.ProBuilder;
 
 [RequireComponent(typeof(CinemachineFreeLook))]
 public class PlayerCamera : GameCameraBase
 {
+    [SerializeField] private GlobalConfiguration _globalConfiguration;
+    [SerializeField] private RectTransform _inputDetectionRect;
     [SerializeField] private Transform _mainCamera;
     [SerializeField] private Cue _cue;
 
@@ -35,9 +36,11 @@ public class PlayerCamera : GameCameraBase
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        var mousePosition = Input.mousePosition;
+        if (Input.GetMouseButtonDown(0) && IsInputInsideInputDetectionArea(mousePosition))
         {
-            EnableCameraMoving();
+            var cameraSensitivity = GetSensitivityFromMousePosition(mousePosition);
+            EnableCameraMoving(cameraSensitivity);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -46,8 +49,21 @@ public class PlayerCamera : GameCameraBase
         }
     }
 
-    private void EnableCameraMoving()
+    private bool IsInputInsideInputDetectionArea(Vector3 mousePosition)
     {
+        return RectTransformUtility.RectangleContainsScreenPoint(_inputDetectionRect, mousePosition);
+    }
+
+    private float GetSensitivityFromMousePosition(Vector3 mousePosition)
+    {
+        return mousePosition.x >= (Screen.width / 2) ?
+            _globalConfiguration.CameraInputSensitivityLow :
+            _globalConfiguration.CameraInputSensitivityHigh;
+    }
+
+    private void EnableCameraMoving(float sensitivity)
+    {
+        _camera.m_XAxis.m_MaxSpeed = sensitivity;
         CinemachineCore.GetInputAxis = _originalInputDelegate;
     }
 
