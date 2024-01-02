@@ -8,7 +8,6 @@ public class GlobalConfiguration : ScriptableObject
     public float ForceChargeVelocity;
     public float MinCueForceMagnitude;
     public float MaxCueForceMagnitude;
-    public float ShootDelaySeconds;
     public float CameraInputSensitivityLow;
     public float CameraInputSensitivityHigh;
 }
