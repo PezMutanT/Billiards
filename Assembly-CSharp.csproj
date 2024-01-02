@@ -90,6 +90,7 @@
      <Compile Include="Assets\Scenes\Cinemachine\CinemachinePlayerController.cs" />
      <Compile Include="Assets\GlobalConfiguration.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
+     <Compile Include="Assets\Scripts\UI\FoulText.cs" />
      <Compile Include="Assets\BallsConfiguration.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
