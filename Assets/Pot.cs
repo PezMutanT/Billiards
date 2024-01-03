@@ -25,7 +25,7 @@ public class Pot : MonoBehaviour
             return;
         }
         
-        Debug.Log($"Kike - Ball {otherBall.name} finished entering pot {gameObject.name}");
+        Debug.Log($"Ball {otherBall.name} finished entering pot {gameObject.name}");
         Messenger.Send(new BallEnteredPot(otherBall, this));
     }
 }
