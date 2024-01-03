@@ -73,16 +73,23 @@ public class GameManager : MonoBehaviour
     private void OnBallStoppedMoving(BallStoppedMoving e)
     {
         _ballsMovingAmount--;
+        
         Debug.Log($"Balls moving (decreased): {_ballsMovingAmount}");
+        
         if (_ballsMovingAmount == 0)
         {
-            _gameRules.CheckScoreThisTurn();
-            _gameRules.StartNewTurn();
-            _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
-            _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
-            _cue.StartNewTurn();
-            _isFirstBallCollisionInTurn = true;
+            EndTurn();
         }
+    }
+
+    private void EndTurn()
+    {
+        _gameRules.CheckScoreThisTurn();
+        _gameRules.StartNewTurn();
+        _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
+        _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
+        _cue.StartNewTurn();
+        _isFirstBallCollisionInTurn = true;
     }
 
     private void OnBallCollidedWithBall(BallCollidedWithBall msg)

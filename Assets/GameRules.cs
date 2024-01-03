@@ -36,6 +36,7 @@ public class GameRules
     private List<Ball> _ballsPottedPreviousTurn;
     private BallOnDecider _ballOnDecider;
     private bool _hasToChangePlayerAtEndOfTurn;
+    private bool _whiteBallHasContactedAnyBall;
 
     public List<BallType> AllowedBallTypes => _ballOnDecider.AllowedBallTypes;
     public Vector3 NextBallOnPosition => _ballOnDecider.NextBallOnPosition();
@@ -79,6 +80,7 @@ public class GameRules
         CurrentPlayer = OtherPlayer;
         
         _hasToChangePlayerAtEndOfTurn = false;
+        _whiteBallHasContactedAnyBall = false;
     }
 
     public void End()
@@ -94,6 +96,15 @@ public class GameRules
     public void CheckScoreThisTurn()
     {
         LogPottedBalls();
+
+        if (!_whiteBallHasContactedAnyBall)
+        {
+            PenaltyCurrentPlayer(4);
+            RespotBallsIfNeeded();
+            _hasToChangePlayerAtEndOfTurn = true;
+            _ballOnDecider.DetermineNextBallOnForOtherPlayer();
+            return;
+        }
 
         if (_ballsPottedThisTurn.Count == 0)
         {
@@ -180,6 +191,7 @@ public class GameRules
 
     public bool IsLegalFirstContactWithWhiteBall(BallType nonWhiteBallType)
     {
+        _whiteBallHasContactedAnyBall = true;
         return _ballOnDecider.IsFirstBallHitAllowed(nonWhiteBallType);
     }
 

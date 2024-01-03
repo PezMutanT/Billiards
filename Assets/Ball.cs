@@ -103,10 +103,14 @@ public class Ball : MonoBehaviour
 
     public void Respot()
     {
+        //TODO - check if there is another ball in place
+        
         gameObject.SetActive(true);
         ForceStop();
         transform.position = _initialPosition;
         _rigidbody.useGravity = true;
+
+        StartCoroutine(WaitUntilBallIsStill());
     }
 
     public void AccelerateFall()
