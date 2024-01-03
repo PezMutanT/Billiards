@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Messaging;
 using UnityEngine;
 
@@ -37,6 +38,7 @@ public class GameRules
     private BallOnDecider _ballOnDecider;
     private bool _hasToChangePlayerAtEndOfTurn;
     private bool _whiteBallHasContactedAnyBall;
+    private int _currentPenaltyValue;
 
     public List<BallType> AllowedBallTypes => _ballOnDecider.AllowedBallTypes;
     public Vector3 NextBallOnPosition => _ballOnDecider.NextBallOnPosition();
@@ -81,6 +83,7 @@ public class GameRules
         
         _hasToChangePlayerAtEndOfTurn = false;
         _whiteBallHasContactedAnyBall = false;
+        _currentPenaltyValue = 0;
     }
 
     public void End()
@@ -99,15 +102,18 @@ public class GameRules
 
         if (!_whiteBallHasContactedAnyBall)
         {
-            PenaltyCurrentPlayer(4);
-            RespotBallsIfNeeded();
-            _hasToChangePlayerAtEndOfTurn = true;
-            _ballOnDecider.DetermineNextBallOnForOtherPlayer();
+            ProcessFoul(4);
             return;
         }
 
         if (_ballsPottedThisTurn.Count == 0)
         {
+            if (_currentPenaltyValue > 0)
+            {
+                ProcessFoul(_currentPenaltyValue);
+                return;
+            }
+            
             _hasToChangePlayerAtEndOfTurn = true;
             _ballOnDecider.DetermineNextBallOnForOtherPlayer();
             return;
@@ -115,20 +121,20 @@ public class GameRules
 
         if (_ballsPottedThisTurn.Count > 1)
         {
-            //foul
-            RespotBallsIfNeeded();
-            _hasToChangePlayerAtEndOfTurn = true;
-            _ballOnDecider.DetermineNextBallOnForOtherPlayer();
+            ProcessFoul(GetMaxPenaltyValue());
+            return;
+        }
+        
+        if (_currentPenaltyValue > 0)
+        {
+            ProcessFoul(_currentPenaltyValue);
             return;
         }
 
         var singleBallPotted = _ballsPottedThisTurn[0];
         if (!_ballOnDecider.IsPottedBallAllowed(singleBallPotted.BallType))
         {
-            //foul
-            RespotBallsIfNeeded();
-            _hasToChangePlayerAtEndOfTurn = true;
-            _ballOnDecider.DetermineNextBallOnForOtherPlayer();
+            ProcessFoul(singleBallPotted.ScoreWhenPotted);
             return;
         }
         
@@ -137,6 +143,20 @@ public class GameRules
         _ballsInPlay.Remove(singleBallPotted);
 
         _ballOnDecider.DetermineNextBallOnForSamePlayer(_hasToChangePlayerAtEndOfTurn, singleBallPotted.BallType);
+    }
+
+    private int GetMaxPenaltyValue()
+    {
+        var maxPenaltyValueInBallsPotted = _ballsPottedThisTurn.Max(x => x.ScoreWhenPotted);
+        return Mathf.Max(maxPenaltyValueInBallsPotted, _currentPenaltyValue);
+    }
+
+    private void ProcessFoul(int penaltyValue)
+    {
+        OtherPlayer.AddScore(penaltyValue);
+        RespotBallsIfNeeded();
+        _hasToChangePlayerAtEndOfTurn = true;
+        _ballOnDecider.DetermineNextBallOnForOtherPlayer();
     }
 
     private void LogPottedBalls()
@@ -162,14 +182,14 @@ public class GameRules
         foreach (var ball in _ballsPottedThisTurn)
         {
             if (ball.BallType == BallType.White ||
-                IsColorBallAfterLastRedPotted(ball))
+                HasBallToBeRespotted(ball))
             {
                 ball.Respot();
             }
         }
     }
 
-    private bool IsColorBallAfterLastRedPotted(Ball ball)
+    private bool HasBallToBeRespotted(Ball ball)
     {
         if (ball.BallType == BallType.Red)
         {
@@ -195,8 +215,8 @@ public class GameRules
         return _ballOnDecider.IsFirstBallHitAllowed(nonWhiteBallType);
     }
 
-    public void PenaltyCurrentPlayer(int penaltyValue)
+    public void CurrentPlayerTouchedIllegalBallFirst(Ball ball)
     {
-        OtherPlayer.AddScore(penaltyValue);
+        _currentPenaltyValue = ball.ScoreWhenPotted;
     }
 }

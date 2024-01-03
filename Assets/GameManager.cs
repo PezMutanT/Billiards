@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         if (!_gameRules.IsLegalFirstContactWithWhiteBall(nonWhiteBall.BallType))
         {
             _foulText.AnimateTextIn();
-            _gameRules.PenaltyCurrentPlayer(nonWhiteBall.ScoreWhenPotted);
+            _gameRules.CurrentPlayerTouchedIllegalBallFirst(nonWhiteBall);
         }
         
         _isFirstBallCollisionInTurn = false;
