@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Messaging;
 using TMPro;
 using UnityEngine;
@@ -8,6 +11,8 @@ public class GameHUD : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _player1ScoreText;
     [SerializeField] private TextMeshProUGUI _player2ScoreText;
+    [SerializeField] private AnimatedScoreText _player1AnimatedScoreText;
+    [SerializeField] private AnimatedScoreText _player2AnimatedScoreText;
     [SerializeField] private CurrentPlayerMarker _player1CurrentPlayerMarker;
     [SerializeField] private CurrentPlayerMarker _player2CurrentPlayerMarker;
     [SerializeField] private ShootGauge _shootGauge;
@@ -20,6 +25,9 @@ public class GameHUD : MonoBehaviour
         
         _player1CurrentPlayerMarker.Activate();
         _player2CurrentPlayerMarker.Deactivate();
+
+        _player1AnimatedScoreText.Init();
+        _player2AnimatedScoreText.Init();
         
         _player1ScoreText.text = "0";
         _player2ScoreText.text = "0";
@@ -108,10 +116,12 @@ public class GameHUD : MonoBehaviour
     {
         if (msg.Player.PlayerNumber == 1)
         {
+            _player1AnimatedScoreText.AnimateScoreText(msg.NewScore - msg.OldScore);
             _player1ScoreText.text = msg.NewScore.ToString();
         }
         else if (msg.Player.PlayerNumber == 2)
         {
+            _player2AnimatedScoreText.AnimateScoreText(msg.NewScore - msg.OldScore);
             _player2ScoreText.text = msg.NewScore.ToString();
         }
     }

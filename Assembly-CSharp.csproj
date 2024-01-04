@@ -59,6 +59,7 @@
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Scripts\UI\CurrentPlayerMarker.cs" />
+     <Compile Include="Assets\Scripts\UI\AnimatedScoreText.cs" />
      <Compile Include="Assets\Scripts\Camera\PlayerCamera.cs" />
      <Compile Include="Assets\Scripts\UI\GameHUD.cs" />
      <Compile Include="Assets\Scripts\Camera\GameCameraBase.cs" />
