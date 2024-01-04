@@ -13,8 +13,9 @@ public class Cue : MonoBehaviour
     [SerializeField] private Transform _cueAnimationRoot;
     [SerializeField] private CueCollider _cueCollider;
             
-    private bool _isCharging = false;
-    private bool _isShooting = false;
+    private bool _isCharging;
+    private bool _isChargeIncreasing;
+    private bool _isShooting;
     private float _forceMagnitude;
     private float ForceMagnitude
     {
@@ -29,6 +30,7 @@ public class Cue : MonoBehaviour
     public void Init()
     {
         _isCharging = false;
+        _isChargeIncreasing = false;
         _isShooting = false;
         
         Messenger.AddListener<ShootChargingStarted>(OnShootChargingStarted);
@@ -39,7 +41,18 @@ public class Cue : MonoBehaviour
     {
         if (_isCharging)
         {
-            ForceMagnitude += _globalConfiguration.ForceChargeVelocity * Time.deltaTime;
+            ForceMagnitude += (_isChargeIncreasing ?
+                _globalConfiguration.ForceChargeVelocity :
+                -_globalConfiguration.ForceChargeVelocity) * Time.deltaTime;
+
+            if (ForceMagnitude >= _globalConfiguration.MaxCueForceMagnitude)
+            {
+                _isChargeIncreasing = false;
+            }
+            else if (ForceMagnitude <= 0f)
+            {
+                _isChargeIncreasing = true;
+            }
         }
     }
 
@@ -96,8 +109,6 @@ public class Cue : MonoBehaviour
         
         Debug.Log($"Shooting with force magnitude: {forceMagnitude}");
         _rigidBody.AddForce(transform.forward * forceMagnitude);
-        
-        ForceMagnitude = 0f;
     }
 
     public void DebugShoot(float forceMagnitude)
@@ -108,6 +119,7 @@ public class Cue : MonoBehaviour
 
     public void StartNewTurn()
     {
+        ForceMagnitude = 0f;
         _isShooting = false;
         _trajectoryRoot.gameObject.SetActive(true);
         _trajectoryHitPoint.gameObject.SetActive(true);
@@ -123,6 +135,7 @@ public class Cue : MonoBehaviour
     private void OnShootChargingStarted(ShootChargingStarted msg)
     {
         _isCharging = true;
+        _isChargeIncreasing = true;
     }
 
     private void OnShootChargingFinished(ShootChargingFinished msg)

@@ -8,6 +8,7 @@ public class ShootGauge : MonoBehaviour
     [SerializeField] private Image _progressBarMask;
     
     private bool _isCharging;
+    private bool _isShooting;
 
     public void Init()
     {
@@ -29,6 +30,11 @@ public class ShootGauge : MonoBehaviour
 
     public void OnShootButtonClick()
     {
+        if (_isShooting)
+        {
+            return;
+        }
+        
         if (_isCharging)
         {
             Shoot();
@@ -48,6 +54,12 @@ public class ShootGauge : MonoBehaviour
     private void Shoot()
     {
         _isCharging = false;
+        _isShooting = true;
         Messenger.Send(new ShootChargingFinished());
+    }
+
+    public void StartNewTurn()
+    {
+        _isShooting = false;
     }
 }

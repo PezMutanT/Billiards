@@ -129,5 +129,6 @@ public class GameHUD : MonoBehaviour
     public void StartNewTurn(List<BallType> allowedBallTypes)
     {
         RefreshBallOnSprite(allowedBallTypes);
+        _shootGauge.StartNewTurn();
     }
 }
