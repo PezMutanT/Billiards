@@ -138,6 +138,8 @@ public class GameRules
             return;
         }
         
+        RespotBallsIfNeeded();
+
         CurrentPlayer.AddScore(singleBallPotted.ScoreWhenPotted);
     
         _ballsInPlay.Remove(singleBallPotted);
