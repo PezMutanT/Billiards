@@ -15,8 +15,7 @@ MonoBehaviour:
   BallMinVelocityThreshold: 0.01
   BallsSleepThreshold: 50
   ForceChargeVelocity: 10000
-  MinCueForceMagnitude: 1000
-  MaxCueForceMagnitude: 20000
-  ShootDelaySeconds: 2
+  MinCueForceMagnitude: 500
+  MaxCueForceMagnitude: 15000
   CameraInputSensitivityLow: 10
   CameraInputSensitivityHigh: 100
