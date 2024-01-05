@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using Messaging;
 using TMPro;
 using UnityEngine;
@@ -9,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameHUD : MonoBehaviour
 {
+    [SerializeField] private GameManager _gameManager;
     [SerializeField] private TextMeshProUGUI _player1ScoreText;
     [SerializeField] private TextMeshProUGUI _player2ScoreText;
     [SerializeField] private AnimatedScoreText _player1AnimatedScoreText;
@@ -18,6 +16,7 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private ShootGauge _shootGauge;
     [SerializeField] private Image _nextBallOnSingleColorSprite;
     [SerializeField] private Image _nextBallOnMulticolorSprite;
+    [SerializeField] private GameObject _confirmationPopupPrefab;
     
     public void Init(List<BallType> allowedBallTypes)
     {
@@ -130,5 +129,12 @@ public class GameHUD : MonoBehaviour
     {
         RefreshBallOnSprite(allowedBallTypes);
         _shootGauge.StartNewTurn();
+    }
+
+    public void OnSettingsButtonClicked()
+    {
+        var popupGameObject = Instantiate(_confirmationPopupPrefab, transform);
+        var confirmationPopup = popupGameObject.GetComponent<ConfirmationPopup>();
+        confirmationPopup.Init(_gameManager);
     }
 }

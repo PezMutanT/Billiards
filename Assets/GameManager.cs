@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
         _soundManager.End();
     }
 
-    public void DebugResetGame()
+    public void ResetGame()
     {
         EndGame();
         StartNewGame();

@@ -8,7 +8,7 @@ public class DebugInput : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.R))
         {
-            _gameManager.DebugResetGame();
+            _gameManager.ResetGame();
         }
     }
 }
