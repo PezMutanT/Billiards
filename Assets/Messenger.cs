@@ -146,7 +146,11 @@ namespace Messaging
             var existsMessage = _listenersByMessage.TryGetValue(typeof(T), out var existingMessageCallbacks);
             if (existsMessage)
             {
-                var foundCallback = existingMessageCallbacks.Find(x => x == callback);
+                var foundCallback = existingMessageCallbacks.Find(x => (Action<T>)x == callback);
+                if (foundCallback == null)
+                {
+                    Debug.LogError($"Listener {typeof(T)} not found");
+                }
                 existingMessageCallbacks.Remove(foundCallback);
             }
         }
