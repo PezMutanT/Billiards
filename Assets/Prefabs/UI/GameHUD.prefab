@@ -2535,6 +2535,8 @@ MonoBehaviour:
   _nextBallOnMulticolorSprite: {fileID: 3499523616101038470}
   _confirmationPopupPrefab: {fileID: 8107272738700690528, guid: 0e45f13920018e04181e0a7875031e29,
     type: 3}
+  _endGamePopupPrefab: {fileID: 8107272738700690528, guid: a222c87b25347264394aa38078bf3c01,
+    type: 3}
 --- !u!1 &8987363365153906884
 GameObject:
   m_ObjectHideFlags: 0

@@ -111,6 +111,18 @@ namespace Messaging
         }
     }
 
+    public class GameEnded : Message
+    {
+        public readonly int Player1Score;
+        public readonly int Player2Score;
+
+        public GameEnded(int player1Score, int player2Score)
+        {
+            Player1Score = player1Score;
+            Player2Score = player2Score;
+        }
+    }
+
     public static class Messenger
     {
         private static readonly Dictionary<Type, List<Delegate>> _listenersByMessage = new Dictionary<Type, List<Delegate>>();

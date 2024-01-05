@@ -74,7 +74,10 @@ public class GameManager : MonoBehaviour
         if (_ballsMovingAmount == 0)
         {
             _gameRules.CheckScoreThisTurn();
-            StartNewTurn();
+            if (!_gameRules.IsGameOver())
+            {
+                StartNewTurn();
+            }
         }
     }
 

@@ -17,6 +17,7 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private Image _nextBallOnSingleColorSprite;
     [SerializeField] private Image _nextBallOnMulticolorSprite;
     [SerializeField] private GameObject _confirmationPopupPrefab;
+    [SerializeField] private GameObject _endGamePopupPrefab;
     
     public void Init(List<BallType> allowedBallTypes)
     {
@@ -33,12 +34,14 @@ public class GameHUD : MonoBehaviour
         
         Messenger.AddListener<PlayerChanged>(OnPlayerChanged);
         Messenger.AddListener<PlayerScoreChanged>(OnPlayerScoreChanged);
+        Messenger.AddListener<GameEnded>(OnGameEnded);
         
         RefreshBallOnSprite(allowedBallTypes);
     }
 
     public void End()
     {
+        Messenger.RemoveListener<GameEnded>(OnGameEnded);
         Messenger.RemoveListener<PlayerScoreChanged>(OnPlayerScoreChanged);
         Messenger.RemoveListener<PlayerChanged>(OnPlayerChanged);
 
@@ -136,5 +139,12 @@ public class GameHUD : MonoBehaviour
         var popupGameObject = Instantiate(_confirmationPopupPrefab, transform);
         var confirmationPopup = popupGameObject.GetComponent<ConfirmationPopup>();
         confirmationPopup.Init(_gameManager);
+    }
+
+    private void OnGameEnded(GameEnded msg)
+    {
+        var popupGameObject = Instantiate(_endGamePopupPrefab, transform);
+        var endGamePopup = popupGameObject.GetComponent<EndGamePopup>();
+        endGamePopup.Init(_gameManager, msg.Player1Score, msg.Player2Score);
     }
 }

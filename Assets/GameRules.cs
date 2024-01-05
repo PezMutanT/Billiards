@@ -150,10 +150,9 @@ public class GameRules
             _ballsInPlay.Remove(singleBallPotted);
         }
         
-        if (_ballsInPlay.Count == 0)
+        if (IsGameOver())
         {
-            Debug.Log($"Kike - show end game popup");
-            //popup
+            Messenger.Send(new GameEnded(_player1.Score, _player2.Score));
         }
         else
         {
@@ -248,5 +247,10 @@ public class GameRules
         nextBall.DebugRemoveFromGame();
         _ballsInPlay.Remove(nextBall);
         _ballOnDecider.DetermineNextBallOnForSamePlayer(false, nextBall.BallType);
+    }
+
+    public bool IsGameOver()
+    {
+        return _ballsInPlay.Count == 0;
     }
 }

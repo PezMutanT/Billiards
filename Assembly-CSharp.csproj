@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\Camera\PlayerCamera.cs" />
      <Compile Include="Assets\Scripts\UI\ConfirmationPopup.cs" />
      <Compile Include="Assets\Scripts\UI\GameHUD.cs" />
+     <Compile Include="Assets\Scripts\UI\EndGamePopup.cs" />
      <Compile Include="Assets\Scripts\Camera\GameCameraBase.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Ball.cs" />
