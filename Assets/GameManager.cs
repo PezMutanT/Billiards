@@ -151,4 +151,10 @@ public class GameManager : MonoBehaviour
         _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
         _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
     }
+
+    public void DebugPotNextBall()
+    {
+        _gameRules.DebugPotNextBall();
+        _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
+    }
 }

@@ -35,6 +35,7 @@ public class GameRules
     private List<Ball> _ballsInPlay;
     private List<Ball> _ballsPottedThisTurn;
     private List<Ball> _ballsPottedPreviousTurn;
+    private List<Ball> _respottedBallsThisTurn;
     private BallOnDecider _ballOnDecider;
     private bool _hasToChangePlayerAtEndOfTurn;
     private bool _whiteBallHasContactedAnyBall;
@@ -50,6 +51,7 @@ public class GameRules
         _ballsInPlay = allBalls;
         _ballsPottedThisTurn = new List<Ball>();
         _ballsPottedPreviousTurn = new List<Ball>();
+        _respottedBallsThisTurn = new List<Ball>();
         _ballOnDecider = new BallOnDecider(_ballsInPlay);
         _hasToChangePlayerAtEndOfTurn = false;
 
@@ -78,6 +80,7 @@ public class GameRules
         
         _ballsPottedPreviousTurn.Clear();
         _ballsPottedThisTurn.Clear();
+        _respottedBallsThisTurn.Clear();
 
         CurrentPlayer = OtherPlayer;
         
@@ -141,10 +144,21 @@ public class GameRules
         RespotBallsIfNeeded();
 
         CurrentPlayer.AddScore(singleBallPotted.ScoreWhenPotted);
-    
-        _ballsInPlay.Remove(singleBallPotted);
 
-        _ballOnDecider.DetermineNextBallOnForSamePlayer(_hasToChangePlayerAtEndOfTurn, singleBallPotted.BallType);
+        if (!_respottedBallsThisTurn.Contains(singleBallPotted))
+        {
+            _ballsInPlay.Remove(singleBallPotted);
+        }
+        
+        if (_ballsInPlay.Count == 0)
+        {
+            Debug.Log($"Kike - show end game popup");
+            //popup
+        }
+        else
+        {
+            _ballOnDecider.DetermineNextBallOnForSamePlayer(_hasToChangePlayerAtEndOfTurn, singleBallPotted.BallType);
+        }
     }
 
     private int GetMaxPenaltyValue()
@@ -186,6 +200,7 @@ public class GameRules
             if (ball.BallType == BallType.White ||
                 HasBallToBeRespotted(ball))
             {
+                _respottedBallsThisTurn.Add(ball);
                 ball.Respot();
             }
         }
@@ -220,5 +235,18 @@ public class GameRules
     public void CurrentPlayerTouchedIllegalBallFirst(Ball ball)
     {
         _currentPenaltyValue = ball.ScoreWhenPotted;
+    }
+
+    public void DebugPotNextBall()
+    {
+        if (_ballsInPlay == null || _ballsInPlay.Count == 0)
+        {
+            return;
+        }
+
+        var nextBall = _ballsInPlay[^1];
+        nextBall.DebugRemoveFromGame();
+        _ballsInPlay.Remove(nextBall);
+        _ballOnDecider.DetermineNextBallOnForSamePlayer(false, nextBall.BallType);
     }
 }

@@ -10,5 +10,10 @@ public class DebugInput : MonoBehaviour
         {
             _gameManager.ResetGame();
         }
+
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            _gameManager.DebugPotNextBall();
+        }
     }
 }

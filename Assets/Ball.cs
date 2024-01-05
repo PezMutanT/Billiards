@@ -71,6 +71,11 @@ public class Ball : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void DebugRemoveFromGame()
+    {
+        RemoveFromGame();
+    }
+
     public void DebugReset()
     {
         ForceStop();
