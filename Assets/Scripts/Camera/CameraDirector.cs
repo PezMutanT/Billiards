@@ -43,7 +43,6 @@ public class CameraDirector : MonoBehaviour
 
     public void End()
     {
-        _camerasData.Clear();
     }
 
     public void SwitchToShotCamera(Transform cueBall, Vector3 direction)

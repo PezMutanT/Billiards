@@ -39,6 +39,9 @@ public class CueCollider : MonoBehaviour
 
     public void StartNewTurn()
     {
+        transform.DORewind();
+        transform.DOKill();
+        
         ResetLocalPosition();
         _thisRigidBody.detectCollisions = true;
     }

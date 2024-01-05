@@ -1,8 +1,6 @@
 ﻿using Messaging;
 using UnityEngine;
 
-[RequireComponent(typeof(Ball))]
-[RequireComponent(typeof(Rigidbody))]
 public class BallCollider : MonoBehaviour
 {
     private Ball _thisBall;

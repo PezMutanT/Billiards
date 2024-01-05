@@ -28,21 +28,16 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
-        InitObjects();
+        _cameraDirector.Init();
         StartNewGame();
-    }
-
-    private void InitObjects()
-    {
-        _soundManager.Init();
-        _gameSetup.Init();
-
-        _gameRules = new GameRules();
     }
 
     private void StartNewGame()
     {
-        _cameraDirector.Init();
+        _soundManager.Init();
+
+        _gameRules = new GameRules();
+        _gameSetup.Init();
         
         _ballsMovingAmount = 0;
         Messenger.AddListener<BallStartedMoving>(OnBallStartedMoving);
@@ -78,13 +73,13 @@ public class GameManager : MonoBehaviour
         
         if (_ballsMovingAmount == 0)
         {
-            EndTurn();
+            _gameRules.CheckScoreThisTurn();
+            StartNewTurn();
         }
     }
 
-    private void EndTurn()
+    private void StartNewTurn()
     {
-        _gameRules.CheckScoreThisTurn();
         _gameRules.StartNewTurn();
         _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
         _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
@@ -136,6 +131,7 @@ public class GameManager : MonoBehaviour
         _cue.End();
         _gameHUD.End();
         _gameRules.End();
+        _gameSetup.End();
         
         Messenger.RemoveListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.RemoveListener<BallStoppedMoving>(OnBallStoppedMoving);
@@ -149,7 +145,9 @@ public class GameManager : MonoBehaviour
     public void DebugResetGame()
     {
         EndGame();
-        
-        Init();
+        StartNewGame();
+        _whiteBall.Respot();
+        _cue.StartNewTurn();
+        _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
     }
 }

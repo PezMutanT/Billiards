@@ -119,6 +119,9 @@ public class Cue : MonoBehaviour
 
     public void StartNewTurn()
     {
+        _cueAnimationRoot.DORewind();
+        _cueAnimationRoot.DOKill();
+
         ForceMagnitude = 0f;
         _isShooting = false;
         _trajectoryRoot.gameObject.SetActive(true);

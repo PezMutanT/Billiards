@@ -25,7 +25,27 @@ public class GameSetup : MonoBehaviour
         SetupBalls();
         InitBalls();
     }
-    
+
+    public void End()
+    {
+        if (_allBalls == null)
+        {
+            return;
+        }
+        
+        foreach (var ball in _allBalls)
+        {
+            if (ball == null)
+            {
+                continue;
+            }
+            
+            Destroy(ball.gameObject);
+        }
+        
+        _allBalls.Clear();
+    }
+
     private void SetupBalls()
     {
         _allBalls = new List<Ball>();
@@ -38,12 +58,6 @@ public class GameSetup : MonoBehaviour
         var yellowSpotY = MetersToUnityUnits(0.292f);
         var greenSpotY = -yellowSpotY;
         var firstRedSpotX = pinkSpotX - _ballSize;
-
-        foreach (var ball in _allBalls)
-        {
-            Destroy(ball);
-        }
-        _allBalls.Clear();
         
         _allBalls.Add(Instantiate(_blackBallPrefab, new Vector3(blackSpotX, 0f, 0f), Quaternion.identity).GetComponent<Ball>());
         _allBalls.Add(Instantiate(_pinkBallPrefab, new Vector3(pinkSpotX, 0f, 0f), Quaternion.identity).GetComponent<Ball>());

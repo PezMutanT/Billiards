@@ -66,6 +66,7 @@
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Ball.cs" />
      <Compile Include="Assets\GameRules.cs" />
+     <Compile Include="Assets\Scripts\WhiteBall.cs" />
      <Compile Include="Assets\BallType.cs" />
      <Compile Include="Assets\Scenes\MultiScenePhysics\PhysicsSceneLoader.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />

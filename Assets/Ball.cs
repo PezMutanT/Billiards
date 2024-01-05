@@ -18,12 +18,17 @@ public class Ball : MonoBehaviour
     {
         ApplyBallColor();
 
-        _initialPosition = transform.position;
+        _initialPosition = GetInitialPosition();
         _previousVelocity = Vector3.zero;
 
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
 
         //StartCoroutine(WaitUntilBallIsStill());
+    }
+
+    protected virtual Vector3 GetInitialPosition()
+    {
+        return transform.position;
     }
 
     private void ApplyBallColor()

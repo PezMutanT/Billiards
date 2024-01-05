@@ -1,8 +1,6 @@
 using Messaging;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Ball))]
 public class VelocityReducer : MonoBehaviour
 {
     [SerializeField] private GlobalConfiguration _globalConfiguration;
