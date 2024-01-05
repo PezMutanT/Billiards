@@ -60,6 +60,7 @@ public class ShootGauge : MonoBehaviour
 
     public void StartNewTurn()
     {
+        _isCharging = false;
         _isShooting = false;
     }
 }

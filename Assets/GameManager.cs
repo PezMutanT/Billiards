@@ -149,5 +149,6 @@ public class GameManager : MonoBehaviour
         _whiteBall.Respot();
         _cue.StartNewTurn();
         _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
+        _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
     }
 }
