@@ -27,6 +27,11 @@ public class PlayerCamera : GameCameraBase
         gameObject.SetActive(true);
     }
 
+    public override void ActivateAsSecondary()
+    {
+        Debug.LogError($"Player camera can't be activated as secondary camera.");
+    }
+
     public override void Deactivate()
     {
         Debug.Log($"Deactivating camera {gameObject.name}...");

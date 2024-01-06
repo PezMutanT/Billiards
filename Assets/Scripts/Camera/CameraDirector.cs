@@ -10,6 +10,7 @@ public class CameraDirector : MonoBehaviour
     
     private Dictionary<CameraType, GameCameraBase> _camerasData;
     private GameCameraBase _currentCamera;
+    private GameCameraBase _currentSecondaryCamera;
 
     public void Init()
     {
@@ -29,13 +30,31 @@ public class CameraDirector : MonoBehaviour
 
     public void ActivateCamera(CameraType cameraType)
     {
-        _currentCamera.Deactivate();
+        if (_currentCamera != null)
+        {
+            _currentCamera.Deactivate();
+        }
+        
         _currentCamera = _camerasData[cameraType];
         _currentCamera.Activate();
     }
 
+    private void ActivateSecondaryCamera(CameraType cameraType)
+    {
+        if (_currentSecondaryCamera != null)
+        {
+            _currentSecondaryCamera.Deactivate();
+        }
+        
+        _currentSecondaryCamera = _camerasData[cameraType];
+        _currentSecondaryCamera.ActivateAsSecondary();
+        _renderTextureGameObject.SetActive(true);
+    }
+
     public void StartNewTurn(Vector3 nextBallOnPosition)
     {
+        _renderTextureGameObject.SetActive(false);
+        
         ActivateCamera(CameraType.PLAYER);
 
         _playerCamera.SetPositionLookingAtBothTargets(nextBallOnPosition);
@@ -47,6 +66,8 @@ public class CameraDirector : MonoBehaviour
 
     public void SwitchToShotCamera(Transform cueBall, Vector3 direction)
     {
+        ActivateCamera(CameraType.TV);
+        
         var ballRadius = cueBall.gameObject.GetComponent<SphereCollider>().radius * cueBall.localScale.x;
         if (Physics.SphereCast(
                 cueBall.position,
@@ -58,10 +79,10 @@ public class CameraDirector : MonoBehaviour
         {
             var targetBall = hit.collider.transform;
             var shotCamera = DetermineShotCamera(cueBall, targetBall);
-            ActivateCamera(shotCamera);
+            ActivateSecondaryCamera(shotCamera);
         }
     }
-    
+
     private CameraType DetermineShotCamera(Transform cueBall, Transform targetBall)
     {
         Vector3 direction = (targetBall.position - cueBall.position).normalized;

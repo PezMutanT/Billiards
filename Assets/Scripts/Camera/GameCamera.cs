@@ -17,6 +17,12 @@ public class GameCamera : GameCameraBase
         _camera.Priority = 1;
     }
 
+    public override void ActivateAsSecondary()
+    {
+        Debug.Log($"Activating secondary camera {gameObject.name}...");
+        _camera.Priority = 2;
+    }
+
     public override void Deactivate()
     {
         Debug.Log($"Deactivating camera {gameObject.name}...");

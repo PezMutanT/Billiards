@@ -9,6 +9,7 @@ public abstract class GameCameraBase : MonoBehaviour
     public abstract void Init();
 
     public abstract void Activate();
+    public abstract void ActivateAsSecondary();
 
     public abstract void Deactivate();
 }
