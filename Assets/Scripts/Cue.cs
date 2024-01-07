@@ -8,8 +8,11 @@ public class Cue : MonoBehaviour
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Rigidbody _whiteBallRigidBody;
     [SerializeField] private float _distanceToWhiteBall;
-    [SerializeField] private Transform _trajectoryRoot;
-    [SerializeField] private Transform _trajectoryHitPoint;
+    [SerializeField] private LineRenderer _whiteBallTrajectoryLine;
+    [SerializeField] private LineRenderer _secondBallTrajectoryLine;
+    [SerializeField] private Transform _projectedWhiteBall;
+    [SerializeField] private float _maxTrajectoryLineLength;
+    [SerializeField] private float _maxSecondBallTrajectoryLineLength;
     [SerializeField] private Transform _cueAnimationRoot;
     [SerializeField] private CueCollider _cueCollider;
             
@@ -17,6 +20,8 @@ public class Cue : MonoBehaviour
     private bool _isChargeIncreasing;
     private bool _isShooting;
     private float _forceMagnitude;
+    private float _ballRadius;
+
     private float ForceMagnitude
     {
         get => _forceMagnitude;
@@ -35,6 +40,9 @@ public class Cue : MonoBehaviour
         
         Messenger.AddListener<ShootChargingStarted>(OnShootChargingStarted);
         Messenger.AddListener<ShootChargingFinished>(OnShootChargingFinished);
+        
+        _ballRadius =
+            _whiteBallRigidBody.gameObject.GetComponent<SphereCollider>().radius * _whiteBallRigidBody.transform.localScale.x;
     }
 
     private void Update()
@@ -72,17 +80,46 @@ public class Cue : MonoBehaviour
         var whiteBallPosition = _whiteBallRigidBody.transform.position;
         transform.position = whiteBallPosition - transform.forward.normalized * _distanceToWhiteBall;
         
-        var ballRadius = _whiteBallRigidBody.gameObject.GetComponent<SphereCollider>().radius * _whiteBallRigidBody.transform.localScale.x;
         if (Physics.SphereCast(
                 _whiteBallRigidBody.transform.position,
-                ballRadius,
+                _ballRadius,
                 transform.forward,
                 out var hit,
                 40f,
                 LayerMask.GetMask("RaycastBalls", "Table")))
         {
-            _trajectoryRoot.localScale = new Vector3(1f, 1f, hit.distance);
-            _trajectoryHitPoint.position = whiteBallPosition + transform.forward * hit.distance;
+            _projectedWhiteBall.position = whiteBallPosition + transform.forward * hit.distance;
+
+            _whiteBallTrajectoryLine.SetPosition(0, whiteBallPosition);
+            _whiteBallTrajectoryLine.SetPosition(1, whiteBallPosition + transform.forward * hit.distance);
+            
+            var secondBall = hit.collider.GetComponent<Ball>();
+            if (secondBall == null)
+            {
+                _secondBallTrajectoryLine.gameObject.SetActive(false);
+                return;
+            }
+
+            _secondBallTrajectoryLine.gameObject.SetActive(true);
+            
+            var secondBallPosition = secondBall.transform.position;
+            var secondBallDirection = (secondBallPosition - hit.point).normalized;
+            var secondTrajectoryStartingPosition = secondBallPosition + _ballRadius * secondBallDirection;
+            
+            _secondBallTrajectoryLine.SetPosition(0, secondTrajectoryStartingPosition);
+            var lineLength = Mathf.Clamp(_maxTrajectoryLineLength - hit.distance, 0f, _maxSecondBallTrajectoryLineLength);
+            _secondBallTrajectoryLine.SetPosition(1, secondTrajectoryStartingPosition + secondBallDirection * lineLength);
+
+            if (Physics.SphereCast(
+                    secondBallPosition,
+                    _ballRadius,
+                    secondBallDirection,
+                    out var secondBallHit,
+                    lineLength,
+                    LayerMask.GetMask("RaycastBalls", "Table")))
+            {
+                _secondBallTrajectoryLine.SetPosition(1, secondBallHit.point);
+            }
         }
     }
 
@@ -90,8 +127,8 @@ public class Cue : MonoBehaviour
     {
         _isShooting = true;
         
-        _trajectoryRoot.gameObject.SetActive(false);
-        _trajectoryHitPoint.gameObject.SetActive(false);
+        _whiteBallTrajectoryLine.gameObject.SetActive(false);
+        _projectedWhiteBall.gameObject.SetActive(false);
 
         Messenger.Send(new PlayerAnnouncedShot(_whiteBallRigidBody.transform, transform.forward));
         
@@ -124,8 +161,8 @@ public class Cue : MonoBehaviour
 
         ForceMagnitude = 0f;
         _isShooting = false;
-        _trajectoryRoot.gameObject.SetActive(true);
-        _trajectoryHitPoint.gameObject.SetActive(true);
+        _projectedWhiteBall.gameObject.SetActive(true);
+        _whiteBallTrajectoryLine.gameObject.SetActive(true);
         _cueCollider.StartNewTurn();
     }
 
