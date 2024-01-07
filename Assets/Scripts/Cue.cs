@@ -81,7 +81,7 @@ public class Cue : MonoBehaviour
         transform.position = whiteBallPosition - transform.forward.normalized * _distanceToWhiteBall;
         
         if (Physics.SphereCast(
-                _whiteBallRigidBody.transform.position,
+                whiteBallPosition,
                 _ballRadius,
                 transform.forward,
                 out var hit,
