@@ -43,7 +43,8 @@ public class GameRules
 
     public List<BallType> AllowedBallTypes => _ballOnDecider.AllowedBallTypes;
     public Vector3 NextBallOnPosition => _ballOnDecider.NextBallOnPosition();
-    
+    public List<Ball> BallsInPlay => _ballsInPlay;
+
     public void Init(List<Ball> allBalls)
     {
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);

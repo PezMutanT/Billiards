@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Debug\DebugInput.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraType.cs" />
      <Compile Include="Assets\Scripts\BallOnDecider.cs" />
+     <Compile Include="Assets\Scripts\ShootProjection.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Scripts\Debug\DebugShoot.cs" />

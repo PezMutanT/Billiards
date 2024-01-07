@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballConfiguration: {fileID: 0}
   _rigidbody: {fileID: 5320489450184074629}
+  _ballCollider: {fileID: 604571890465912582}
 --- !u!114 &7557069635076738437
 MonoBehaviour:
   m_ObjectHideFlags: 0

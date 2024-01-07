@@ -17,6 +17,8 @@ public class Cue : MonoBehaviour
     private bool _isChargeIncreasing;
     private bool _isShooting;
     private float _forceMagnitude;
+    private ShootProjection _shootProjection;
+
     private float ForceMagnitude
     {
         get => _forceMagnitude;
@@ -27,11 +29,13 @@ public class Cue : MonoBehaviour
         }
     }
 
-    public void Init()
+    public void Init(ShootProjection shootProjection)
     {
         _isCharging = false;
         _isChargeIncreasing = false;
         _isShooting = false;
+
+        _shootProjection = shootProjection;
         
         Messenger.AddListener<ShootChargingStarted>(OnShootChargingStarted);
         Messenger.AddListener<ShootChargingFinished>(OnShootChargingFinished);
@@ -53,6 +57,9 @@ public class Cue : MonoBehaviour
             {
                 _isChargeIncreasing = true;
             }
+        }
+        else
+        {
         }
     }
 
@@ -84,6 +91,9 @@ public class Cue : MonoBehaviour
             _trajectoryRoot.localScale = new Vector3(1f, 1f, hit.distance);
             _trajectoryHitPoint.position = whiteBallPosition + transform.forward * hit.distance;
         }
+        
+        _shootProjection.SimulateTrajectory(_whiteBallRigidBody.transform.position, transform.forward);
+
     }
 
     private void ShootWithDelay()

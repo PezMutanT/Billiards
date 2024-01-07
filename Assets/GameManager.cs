@@ -12,13 +12,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameSetup _gameSetup;
     [SerializeField] private Cue _cue;
     [SerializeField] private Ball _whiteBall;
+    [SerializeField] private ShootProjection _shootProjection;
 
     private GameRules _gameRules;
     private int _ballsMovingAmount;
     private bool _isFirstBallCollisionInTurn;
 
     private List<Ball> AllBalls => _gameSetup.AllBalls;
-
+    private List<Ball> BallsInPlay => _gameRules.BallsInPlay;
+    
     void Awake()
     {
         DOTween.Init();
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour
 
         _gameRules = new GameRules();
         _gameSetup.Init();
-        
+
         _ballsMovingAmount = 0;
         Messenger.AddListener<BallStartedMoving>(OnBallStartedMoving);
         Messenger.AddListener<BallStoppedMoving>(OnBallStoppedMoving);
@@ -47,9 +49,10 @@ public class GameManager : MonoBehaviour
 
         _gameRules.Init(AllBalls);
         _gameHUD.Init(_gameRules.AllowedBallTypes);
-        _cue.Init();
-        _whiteBall.Init();
-        
+        _cue.Init(_shootProjection);
+        _whiteBall.Init(false);
+        _shootProjection.Init(_whiteBall, BallsInPlay);
+
         _isFirstBallCollisionInTurn = true;
     }
 
@@ -87,6 +90,7 @@ public class GameManager : MonoBehaviour
         _gameHUD.StartNewTurn(_gameRules.AllowedBallTypes);
         _cameraDirector.StartNewTurn(_gameRules.NextBallOnPosition);
         _cue.StartNewTurn();
+        _shootProjection.StartNewTurn(BallsInPlay);
         _isFirstBallCollisionInTurn = true;
     }
 
@@ -95,7 +99,7 @@ public class GameManager : MonoBehaviour
         var ballABallType = msg.BallA.BallType;
         var ballBBallType = msg.BallB.BallType;
         
-        Debug.Log($"Ball {ballABallType} collided with ball {ballBBallType}");
+        // Debug.Log($"Ball {ballABallType} collided with ball {ballBBallType}");
 
         if (!_isFirstBallCollisionInTurn)
         {

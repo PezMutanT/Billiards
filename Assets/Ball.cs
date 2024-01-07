@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Messaging;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] private BallConfiguration _ballConfiguration;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private BallCollider _ballCollider;
 
     public BallType BallType => _ballConfiguration.BallType;
     public int ScoreWhenPotted => _ballConfiguration.ScoreWhenPotted;
@@ -13,8 +15,13 @@ public class Ball : MonoBehaviour
     private Vector3 _initialPosition;
     private Vector3 _previousVelocity;
     private bool _isInitializing;
-    
-    public void Init()
+
+    private void Awake()
+    {
+        _ballCollider.Init(true);
+    }
+
+    public void Init(bool isGhost)
     {
         ApplyBallColor();
 
@@ -22,6 +29,8 @@ public class Ball : MonoBehaviour
         _previousVelocity = Vector3.zero;
 
         Messenger.AddListener<BallEnteredPot>(OnBallEnteredPot);
+
+        _ballCollider.Init(isGhost);
 
         //StartCoroutine(WaitUntilBallIsStill());
     }

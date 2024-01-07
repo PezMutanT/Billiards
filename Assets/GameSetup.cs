@@ -93,7 +93,7 @@ public class GameSetup : MonoBehaviour
     {
         foreach (var ball in _allBalls)
         {
-            ball.Init();
+            ball.Init(false);
         }
     }
 
