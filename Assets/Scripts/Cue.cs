@@ -128,6 +128,7 @@ public class Cue : MonoBehaviour
         _isShooting = true;
         
         _whiteBallTrajectoryLine.gameObject.SetActive(false);
+        _secondBallTrajectoryLine.gameObject.SetActive(false);
         _projectedWhiteBall.gameObject.SetActive(false);
 
         Messenger.Send(new PlayerAnnouncedShot(_whiteBallRigidBody.transform, transform.forward));
@@ -161,8 +162,8 @@ public class Cue : MonoBehaviour
 
         ForceMagnitude = 0f;
         _isShooting = false;
-        _projectedWhiteBall.gameObject.SetActive(true);
         _whiteBallTrajectoryLine.gameObject.SetActive(true);
+        _projectedWhiteBall.gameObject.SetActive(true);
         _cueCollider.StartNewTurn();
     }
 
