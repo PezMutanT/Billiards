@@ -931,7 +931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Ball on:'
+  m_text: 'Next ball:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0306af8eb6ca5aa4b89ad87411d1d6aa, type: 2}
   m_sharedMaterial: {fileID: -699287713466010709, guid: 0306af8eb6ca5aa4b89ad87411d1d6aa,
