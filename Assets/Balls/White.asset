@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallType: 0
   Color: {r: 1, g: 1, b: 1, a: 1}
-  ScoreWhenPotted: -4
+  ScoreWhenPotted: 4
