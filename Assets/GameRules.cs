@@ -105,6 +105,7 @@ public class GameRules
 
         if (!_whiteBallHasContactedAnyBall)
         {
+            Debug.Log($"Foul - No ball was contacted.");
             ProcessFoul(4);
             return;
         }
@@ -113,6 +114,7 @@ public class GameRules
         {
             if (_currentPenaltyValue > 0)
             {
+                Debug.Log($"Foul - Penalty value {_currentPenaltyValue}.");
                 ProcessFoul(_currentPenaltyValue);
                 return;
             }
@@ -124,12 +126,19 @@ public class GameRules
 
         if (_ballsPottedThisTurn.Count > 1)
         {
+            var logString = "Foul - More than one ball potted: ";
+            foreach (var ballPotted in _ballsPottedThisTurn)
+            {
+                logString += $"{ballPotted.BallType},";
+            }
+            Debug.Log(logString);
             ProcessFoul(GetMaxPenaltyValue());
             return;
         }
         
         if (_currentPenaltyValue > 0)
         {
+            Debug.Log($"Foul - _currentPenaltyValue: {_currentPenaltyValue}");
             ProcessFoul(_currentPenaltyValue);
             return;
         }
@@ -137,6 +146,7 @@ public class GameRules
         var singleBallPotted = _ballsPottedThisTurn[0];
         if (!_ballOnDecider.IsPottedBallAllowed(singleBallPotted.BallType))
         {
+            Debug.Log($"Foul - Potted ball not allowed: {singleBallPotted.BallType}.");
             ProcessFoul(singleBallPotted.ScoreWhenPotted);
             return;
         }
@@ -147,6 +157,7 @@ public class GameRules
 
         if (!_respottedBallsThisTurn.Contains(singleBallPotted))
         {
+            Debug.Log($"Ball removed from play: {singleBallPotted.BallType}.");
             _ballsInPlay.Remove(singleBallPotted);
         }
         
@@ -163,7 +174,9 @@ public class GameRules
     private int GetMaxPenaltyValue()
     {
         var maxPenaltyValueInBallsPotted = _ballsPottedThisTurn.Max(x => x.ScoreWhenPotted);
-        return Mathf.Max(maxPenaltyValueInBallsPotted, _currentPenaltyValue);
+        var maxPenaltyValue = Mathf.Max(maxPenaltyValueInBallsPotted, _currentPenaltyValue);
+        Debug.Log($"GetMaxPenaltyValue() - maxPenaltyValueInBallsPotted: {maxPenaltyValueInBallsPotted}, _currentPenaltyValue: {_currentPenaltyValue}, max: {maxPenaltyValue}");
+        return maxPenaltyValue;
     }
 
     private void ProcessFoul(int penaltyValue)
@@ -201,6 +214,7 @@ public class GameRules
             {
                 _respottedBallsThisTurn.Add(ball);
                 ball.Respot();
+                Debug.Log($"Ball {ball.BallType} respotted.");
             }
         }
     }

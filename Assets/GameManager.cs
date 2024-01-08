@@ -62,14 +62,14 @@ public class GameManager : MonoBehaviour
     {
         _ballsMovingAmount++;
         
-        Debug.Log($"Balls moving (increased): {_ballsMovingAmount}");
+        Debug.Log($"Balls moving (increased by {e.Ball.name}): {_ballsMovingAmount}");
     }
 
     private void OnBallStoppedMoving(BallStoppedMoving e)
     {
         _ballsMovingAmount--;
         
-        Debug.Log($"Balls moving (decreased): {_ballsMovingAmount}");
+        Debug.Log($"Balls moving (decreased by {e.Ball.name}): {_ballsMovingAmount}");
         
         if (_ballsMovingAmount == 0)
         {
