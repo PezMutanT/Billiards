@@ -10,9 +10,9 @@ It is meant to be used as a vehicle to create a full Unity game while learning a
 - 3D modeling and UV texture mapping using Blender.
 # Snooker rules
 This game is implemented following the official snooker rules by The World Professional Billiards and Snooker Association (WPBSA) that can be found here https://wpbsa.com/wp-content/uploads/Rulebook-Website-Updated-May-2022-2.pdf
-## How to play
+# How to play
 In the game, the player takes the place of two different players alternating turns in order to one of them be the winner of the game (as of now, there is no AI that the player can play against). Current player is marked with an arrow at the bottom scoreboard.
-### Rules summary
+## Rules summary
 - Each player must alternate potting a red ball and a colored ball on each of their shots until there are no more balls in play or they miss potting a ball or commit a foul.
 - If the first ball touched by the cue ball is other than the ball that needs to be potted (indicated in the bottom-middle of the screen), the player commits a foul and the turn goes to the other player.
 - When there are no red balls left, the order in which the rest of the balls have to be potted is: yellow, green, brown, blue, pink and black.
