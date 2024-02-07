@@ -20,7 +20,7 @@ There is a "Shoot" button on the bottom-right corner of the screen.
 - After tapping the button for the second time, the cue itself makes a little animation for about 1 or 2 seconds, so be patient and wait for the shot to automatically happen.
 # Snooker rules
 This game is implemented following the official snooker rules by The World Professional Billiards and Snooker Association (WPBSA) that can be found here https://wpbsa.com/wp-content/uploads/Rulebook-Website-Updated-May-2022-2.pdf
-# TO-DO features.
+# TO-DO features
 - Implement "ball-in-hand" feature for the player to be able to choose where to respot the cue ball.
 - Allow the player to choose impact point on the cue ball in order to apply different kinds of spin to it.
 - Post-processing for better visual outcome.
